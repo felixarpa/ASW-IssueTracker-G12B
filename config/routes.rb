@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
-  get 'home#index'
-  get 'home#profile'
+  root 'home#index'
+  get 'home/profile' => 'home#profile'
+  get 'auth/:provider/callback', to: "sessions#create"
+  delete 'sign_out', to: "sessions#destroy", as: 'sign_out'
   
   resources :issues
-  root 'issues#index'
+  get 'issues/index' => 'issues#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
