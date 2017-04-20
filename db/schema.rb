@@ -15,8 +15,14 @@ ActiveRecord::Schema.define(version: 20170420135413) do
   create_table "issues", force: :cascade do |t|
     t.string   "title"
     t.string   "description"
+<<<<<<< HEAD
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+=======
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
+    t.string   "kind",        default: "/images/issue_types/task.svg"
+>>>>>>> 9377a6ada0f232f64ecc7fe6fa06dffa85b4d2dd
   end
 
   create_table "users", force: :cascade do |t|
