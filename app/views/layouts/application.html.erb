@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+
+<!--TOTA LA INTERFICIE GRAFICA QUE ES MOSTRARA EN TOT MOMENT, VEURE YIELD AL FINAL-->
+
 <html>
   <head>
     <title>IssueTrackerG12B</title>
@@ -6,11 +9,44 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   <!--Ultima versio de CSS-->
-  <!--<link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">-->
+  <link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <!--Opcional (Theme)-->
-  <!--<link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">-->
+  <link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
   <!--Ultima versio de Javascript-->
-  <!--<script src = "http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>-->
+  <script src = "http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  
+  <style>
+    div.navbar-header {
+      vertical-align: middle;
+      /*border:solid 1px black;*/
+      height: 60px;
+    }
+    h1 {
+      vertical-align: middle;
+      height: 51px;
+      margin-top: 1px;
+      margin-bottom: 1px;
+    }
+    ul.nav.navbar-nav.navbar-right {
+      vertical-align: middle;
+      margin-top: 4px;
+      margin-bottom: 3px;
+    }
+    .navbar-nav>li>a {
+      vertical-align: middle;
+      padding-top: 1px;
+      padding-bottom: 1px;
+      padding-right: 1px;
+      padding-left: 1px;
+    }
+    #outBtn {
+      vertical-align: middle;
+      padding-top: 14px;
+    }
+    
+  </style>
+  
+  
   </head>
   <body>
 
@@ -24,7 +60,7 @@
             <span class = "icon-bar"></span>
             <span class = "icon-bar"></span>
           </button>
-          <h1><%= link_to root_path do %>Omni<% end %></h1>
+          <h1><%= link_to root_path do %><%= image_tag('iTLogo.png', width: 51, height: 51, class: 'img-circle') %><% end %></h1>
         </div>
         
         <!--Obtenir els nav links i les forms per fer toggling-->
@@ -32,7 +68,7 @@
           <ul class = "nav navbar-nav navbar-right">
             <% if current_user %>
               <li>Signed in as: <%= current_user.name %> - <%= image_tag(@auth['info']['image'], width: 51, height: 51, class: 'img-circle') %></li>
-              <li><%= link_to "Sign Out", 'sign_out', method: :delete %></li>
+              <li id = "outBtn"><%= link_to "Sign Out", 'sign_out', method: :delete %></li>
             <% else %>
               <li><%= link_to "auth/twitter" do %><%= image_tag('twitter.png', width: 51, height: 51, class: 'img-circle') %><% end %></li>
             <% end %>
@@ -41,6 +77,7 @@
       </div> <!--Acaba container-fluid-->
     </nav>
     
+    <!--INTERFICIE GRAFICA EXTRA QUE ES MOSTRA EN FUNCIO DE A QUIN CONTROLLER APUNTEM-->
     <%= yield %>
     
   </body>
