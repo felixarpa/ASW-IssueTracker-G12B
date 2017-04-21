@@ -1,3 +1,188 @@
 // Place all the styles related to the Issues controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0 auto;
+  padding: 20px;
+  color: #333;
+  font-size: 14px;
+}
+
+div {
+  display: block;
+}
+
+a {
+  color: #3572b0;
+  text-decoration: none;
+}
+
+h1 {
+  font-size: 24px;
+  font-weight: 400;
+}
+
+h2 {
+  font-size: 20px;
+  font-weight: 400;
+}
+
+
+
+.aui-button, .aui-button:visited {
+  box-sizing: border-box;
+  background: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 3.01px;
+  color: #333;
+  cursor: pointer;
+  display: inline-block;
+  font-family: inherit;
+  font-size: 14px;
+  font-variant: normal;
+  font-weight: 400;
+  height: 2.14285714em;
+  margin: 0;
+  padding: 4px 10px;
+  text-decoration: none;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
+.aui-button.aui-button-subtle {
+  background: 0 0;
+  border-color: transparent;
+  color: #707070;
+}
+
+.aui-button:hover {
+  background: #e9e9e9;
+  border-color: #999;
+  color: #333;
+  text-decoration: none;
+}
+
+
+.header {
+  height: 50px;
+  display: table;
+  box-sizing: border-box;
+  width: 100%;
+
+  .section-title {
+    display: table-cell;
+    vertical-align: top;
+    width: 384px;
+  }
+
+  .page-actions {
+    display: table-cell;
+    vertical-align: top;
+    width: 576px;
+    font-size: 0;
+    text-align: right;
+    width: 60%;
+
+    .add-icon {
+      font-size: 18px;
+      margin-right: 2px;
+      font-weight: bold;
+      left: 0;
+      line-height: 1;
+    }
+  }
+}
+
+.issues .issue-list {
+  font-size: 14px;
+  display: table;
+  border-spacing: 2px;
+  border-color: grey;
+  line-height: 18px;
+  width: 100%;
+  border-collapse: collapse;
+
+  thead {
+    font-size: 14px;
+    text-align: left;
+  }
+  th {
+    font-weight: bold;
+    display: table-cell;
+    padding: 7px 10px;
+
+  }
+  th:hover:after {
+    border-top-color: #333;
+    border-bottom-color: transparent;
+    opacity: .5;
+    top: 2px;
+  }
+  th:after {
+    border: 4px solid transparent;
+    content: "";
+    display: inline-block;
+    margin-left: 5px;
+    position: relative;
+    width: 0;
+  }
+
+  .current {
+    background-color: #f5f5f5;
+    color: #333;
+    cursor: pointer;
+  }
+
+  .current:after {
+    border-top-color: #333;
+    border-bottom-color: transparent;
+    top: 2px;
+  }
+  .asc:after, .asc:hover:after {
+    border-top-color: transparent;
+    border-bottom-color: #333;
+    opacity: .5;
+    top: -2px;
+  }
+  .desc {
+
+  }
+  .current:after, .asc:hover:after, .desc:hover:after {
+    opacity: 1;
+  }
+
+  th>a {
+    color: inherit;
+  }
+  th:hover {
+    background-color: #f5f5f5;
+    color: #333;
+    cursor: pointer;
+  }
+
+  td {
+    display: table-cell;
+    padding: 7px 10px;
+  }
+  td.date {
+    width: 102px;
+  }
+  td.text {
+    max-width: 180px;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  tr {
+    display: table-row;
+    background: #fff;
+    border-bottom: 1px solid #ccc;
+    color: #333;
+  }
+  tbody tr:hover {
+    background-color: #f5f5f5;
+  }
+}

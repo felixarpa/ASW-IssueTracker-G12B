@@ -1,29 +1,41 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Issues</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Description</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @issues.each do |issue| %>
-      <tr>
-        <td><%= issue.title %></td>
-        <td><%= issue.description %></td>
-        <td><%= link_to 'Show', issue %></td>
-        <td><%= link_to 'Edit', edit_issue_path(issue) %></td>
-        <td><%= link_to 'Destroy', issue, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+<div class="header">
+  <div class="section-title">
+    <h1>Issues</h1>
+  </div>
+  <div class="page-actions">
+    <%= link_to new_issue_path, class: 'aui-button aui-button-subtle' do %>
+      <span class="add-icon">+</span>
+      <span class="aui-button-label">Create issue</span>
     <% end %>
-  </tbody>
-</table>
+  </div>
+</div>
 
-<br>
 
-<%= link_to 'New Issue', new_issue_path %>
+<div class="issues">
+  <div class="issues-toolbar"></div>
+  <h2>Issues (<%= @issues.size %>)</h2>
+
+  <table class="issue-list">
+    <thead>
+    <%= sortable "title" %>
+    <%= sortable "created_at", "Created" %>
+    <%= sortable "updated_at", "Updated" %>
+    </thead>
+    <tbody>
+      <% @issues.each do |issue| %>
+        <tr>
+          <td class="text">
+            <%= link_to '#' << issue.id.to_s << ': ' << issue.title, issue %>
+          </td>
+          <td class="date">
+            <%= issue.created_at.to_date %>
+          </td>
+          <td class="date">
+            <%= issue.updated_at.to_date %>
+          </td>
+        </tr>
+      <% end %>
+  </table>
+</div>
