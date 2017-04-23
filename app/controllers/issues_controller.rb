@@ -6,6 +6,9 @@ class IssuesController < ApplicationController
   # GET /issues.json
   def index
     @issues = Issue.all.order(sort_column + ' ' + sort_direction)
+    if params[:kind]
+      @issues = @issues.where(kind: params[:kind])
+    end
   end
 
   # GET /issues/1

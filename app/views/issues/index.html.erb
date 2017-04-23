@@ -20,6 +20,7 @@
   <table class="issue-list">
     <thead>
     <%= sortable "id", "Title" %>
+    <%= sortable "kind", "T" %>
     <%= sortable "created_at", "Created" %>
     <%= sortable "updated_at", "Updated" %>
     </thead>
@@ -28,6 +29,11 @@
         <tr>
           <td class="text">
             <%= link_to '#' << issue.id.to_s << ': ' << issue.title, issue %>
+          </td>
+          <td class="text">
+            <a href="/issues?kind=<%= issue.kind %>" class="icon-kind
+            icon-<%= issue.kind %>" title="Filter by type: <%= issue.kind %>">
+              <%= issue.kind %></a>
           </td>
           <td class="date">
             <%= issue.created_at.to_date %>
