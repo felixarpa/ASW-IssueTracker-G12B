@@ -5,9 +5,11 @@
     <h1>Issues</h1>
   </div>
   <div class="page-actions">
-    <%= link_to new_issue_path, class: 'aui-button aui-button-subtle' do %>
-      <span class="add-icon">+</span>
-      <span class="aui-button-label">Create issue</span>
+    <% if current_user %>
+      <%= link_to new_issue_path, class: 'aui-button aui-button-subtle' do %>
+        <span class="add-icon">+</span>
+        <span class="aui-button-label">Create issue</span>
+      <% end %>
     <% end %>
   </div>
 </div>
