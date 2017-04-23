@@ -95,95 +95,144 @@ h2 {
   }
 }
 
-.issues .issue-list {
-  font-size: 14px;
-  display: table;
-  border-spacing: 2px;
-  border-color: grey;
-  line-height: 18px;
-  width: 100%;
-  border-collapse: collapse;
+.issues {
+  display: block;
 
-  thead {
+  .issues-toolbar {
+    width: 100%;
+    height: 42px;
+
+    .filter-container {
+      float: left;
+      margin: 5px 0 0 0;
+      height: 42px;
+
+      .filter-label {
+        float: left;
+        margin-right: 10px;
+        line-height: 30px;
+        color: #707070;
+        display: inline-block;
+        text-transform: uppercase;
+        margin-top: 0;
+        margin-bottom: 0;
+        position: relative;
+        top: 3px;
+      }
+
+      .filter-status {
+        float: left;
+        margin: 0;
+        padding: 3px 0;
+        list-style: none;
+        line-height: 20px;
+        display: block;
+
+        li {
+          float: left;
+          margin-right: 10px;
+          display: list-item;
+          text-align: -webkit-match-parent;
+
+          a {
+            text-align: center;
+            display: inline-block;
+          }
+        }
+      }
+    }
+  }
+
+  .issue-list {
     font-size: 14px;
-    text-align: left;
-  }
-  th {
-    font-weight: bold;
-    display: table-cell;
-    padding: 7px 10px;
+    display: table;
+    border-spacing: 2px;
+    border-color: grey;
+    line-height: 18px;
+    width: 100%;
+    border-collapse: collapse;
 
-  }
-  th:hover:after {
-    border-top-color: #333;
-    border-bottom-color: transparent;
-    opacity: .5;
-    top: 2px;
-  }
-  th:after {
-    border: 4px solid transparent;
-    content: "";
-    display: inline-block;
-    margin-left: 5px;
-    position: relative;
-    width: 0;
-  }
+    thead {
+      font-size: 14px;
+      text-align: left;
+    }
+    th {
+      font-weight: bold;
+      display: table-cell;
+      padding: 7px 10px;
 
-  .current {
-    background-color: #f5f5f5;
-    color: #333;
-    cursor: pointer;
-  }
+    }
+    th:hover:after {
+      border-top-color: #333;
+      border-bottom-color: transparent;
+      opacity: .5;
+      top: 2px;
+    }
+    th:after {
+      border: 4px solid transparent;
+      content: "";
+      display: inline-block;
+      margin-left: 5px;
+      position: relative;
+      width: 0;
+    }
 
-  .current:after {
-    border-top-color: #333;
-    border-bottom-color: transparent;
-    top: 2px;
-  }
-  .asc:after, .asc:hover:after {
-    border-top-color: transparent;
-    border-bottom-color: #333;
-    opacity: .5;
-    top: -2px;
-  }
-  .desc {
+    .current {
+      background-color: #f5f5f5;
+      color: #333;
+      cursor: pointer;
+    }
 
-  }
-  .current:after, .asc:hover:after, .desc:hover:after {
-    opacity: 1;
-  }
+    .current:after {
+      border-top-color: #333;
+      border-bottom-color: transparent;
+      top: 2px;
+    }
+    .asc:after, .asc:hover:after {
+      border-top-color: transparent;
+      border-bottom-color: #333;
+      opacity: .5;
+      top: -2px;
+    }
+    .desc {
 
-  th>a {
-    color: inherit;
-  }
-  th:hover {
-    background-color: #f5f5f5;
-    color: #333;
-    cursor: pointer;
-  }
+    }
+    .current:after, .asc:hover:after, .desc:hover:after {
+      opacity: 1;
+    }
 
-  td {
-    display: table-cell;
-    padding: 7px 10px;
-  }
-  td.date {
-    width: 102px;
-  }
-  td.text {
-    max-width: 180px;
-    box-sizing: border-box;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+    th > a {
+      color: inherit;
+    }
+    th:hover {
+      background-color: #f5f5f5;
+      color: #333;
+      cursor: pointer;
+    }
 
-  tr {
-    display: table-row;
-    background: #fff;
-    border-bottom: 1px solid #ccc;
-    color: #333;
-  }
-  tbody tr:hover {
-    background-color: #f5f5f5;
+    td {
+      display: table-cell;
+      padding: 7px 10px;
+    }
+    td.date {
+      width: 102px;
+    }
+    td.text {
+      max-width: 180px;
+      box-sizing: border-box;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    tr {
+      display: table-row;
+      background: #fff;
+      border-bottom: 1px solid #ccc;
+      color: #333;
+    }
+    tbody tr:hover {
+      background-color: #f5f5f5;
+    }
   }
 }
 
@@ -260,7 +309,16 @@ h2 {
         }
 
         dd.with-icon {
-          position: relative;
+          display: block;
+          margin: 0;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+
+          span {
+            position: relative;
+            top: 3px;
+          }
         }
 
         dt {

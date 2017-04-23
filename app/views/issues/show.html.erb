@@ -44,27 +44,24 @@
     <div class="sidebar">
       <div class="issue-attrs">
         <dl>
-
           <dt>Type</dt>
           <dd class="type with-icon">
-            <div class="type-container">
-              <a href="/issues?kind=<%= @issue.kind %>">
-                <span class="icon-kind icon-<%= @issue.kind %>"></span>
-                <%= @issue.kind %>
-              </a>
-            </div>
+            <a href="/issues?kind=<%= @issue.kind %>">
+              <span class="icon-kind icon-<%= @issue.kind %>"></span>
+              <%= @issue.kind %>
+            </a>
           </dd>
-
+        </dl>
+        <dl>
           <dt>Priority</dt>
           <dd class="priority with-icon">
-            <div class="priority-container">
-              <a href="/issues?priority=<%= @issue.priority %>">
-                <span class="icon-priority icon-<%= @issue.priority %>"></span>
-                <%= @issue.priority %>
-              </a>
-            </div>
+            <a href="/issues?priority=<%= @issue.priority %>">
+              <span class="icon-priority icon-<%= @issue.priority %>"></span>
+              <%= @issue.priority %>
+            </a>
           </dd>
-
+        </dl>
+        <dl>
           <dt>Votes</dt>
           <dd class="votes">
             <span class="aui-badge issue-vote-count-<%= @issue.votes
@@ -77,9 +74,7 @@
                         'Vote for this issue' %>
               </a>
             <% end %>
-
           </dd>
-
         </dl>
       </div>
     </div>
