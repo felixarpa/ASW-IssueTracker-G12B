@@ -8,40 +8,102 @@
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+<<<<<<< HEAD
   <!--Ultima versio de CSS-->
-  <!--<link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
+  <link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <!--Opcional (Theme)-->
-  <!--<link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">-->
+  <link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
   <!--Ultima versio de Javascript-->
-  <!--<script src = "http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>-->
+  <script src = "http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+=======
+  <!--Ultima versio de CSS
+  <link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <!--Opcional (Theme)
+  <link rel = "stylesheet" href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+  <!--Ultima versio de Javascript
+  <script src = "http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>-->
+>>>>>>> 990e8bb42295d6f93897e513e2daac6173848cd2
   
   <style>
-    div.navbar-header {
-      vertical-align: middle;
-      /*border:solid 1px black;*/
-      height: 60px;
+    body {
+      height: 100%;
+      padding-right: 12px;
+      padding-bottom: 12px;
+      padding-left: 12px;
+      padding-top: 12px;
     }
-    h1 {
-      vertical-align: middle;
-      height: 51px;
-      margin-top: 1px;
-      margin-bottom: 1px;
+    /*#page {
+      position: relative;
+      height: 100%;
+    }*/
+    /*Barra superior que es mostra sempre*/
+    #BarraSuperior {
+      position: relative;
+      float: top;
+      width: 100%;
+      text-align: center;
+      height: 69px;
+      border-width: 1px;
+      border-style: solid;
+      border-radius: 18px;
     }
-    ul.nav.navbar-nav.navbar-right {
-      vertical-align: middle;
-      margin-top: 4px;
-      margin-bottom: 3px;
+    #BarraSuperior-Left {
+      position: relative;
+      float: left;
+      width: 69px;
+      height: 69px;
+      text-align: left;
     }
-    .navbar-nav>li>a {
-      vertical-align: middle;
-      padding-top: 1px;
-      padding-bottom: 1px;
-      padding-right: 1px;
-      padding-left: 1px;
+    #mainBtn {
+      padding-left: 12px;
+      margin-top: 9px;
+      margin-bottom: 7px;
     }
-    #outBtn {
-      vertical-align: middle;
-      padding-top: 14px;
+    #BarraSuperior-Right {
+      position: relative;
+      float: right;
+      width: 80%;
+      height: 69px;
+      text-align: right;
+    }
+    #BarraSuperior-Right-LoggedIn {
+      position: relative;
+      float: right;
+      line-height: 69px;
+      text-align: center;
+      width: 222px;
+      height: 69px;
+    }
+    #BarraSuperior-Right-Pic {
+      position: relative;
+      float: right;
+      text-align: center;
+      margin-top: 9px;
+      margin-bottom: 7px;
+      width: 54px;
+      height: 54px;
+    }
+    #BarraSuperior-Right-SignOut {
+      position: relative;
+      float: right;
+      line-height: 69px;
+      text-align: center;
+      width: 81px;
+      height: 69px;
+    }
+    #LoginBtnContainer {
+      padding-left: 32px;
+      padding-right: 12px;
+      margin-top: 9px;
+      margin-bottom: 7px;
+    }
+    li.twitterLi {
+      list-style-type: none;
+      padding-top: 9px;
+      padding-right: 12px;
+    }
+    img.img-circle {
+      border-radius: 30px;
     }
     
   </style>
@@ -49,33 +111,23 @@
   
   </head>
   <body>
-
-    <nav class = "navbar navbar-default">
-      <div class = "container-fluid">
+      <div id = "BarraSuperior">
         <!--Brand i Toggle agrupats per millorar el display en movils -->
-        <div class = "navbar-header">
-          <button type = "button" class = "navbar-toggle collapsed" data-toggle = "collapse" data-target = "#bs-example-nabar-collapse-1">
-            <span class = "sr-only">Toggle navigation</span>
-            <span class = "icon-bar"></span>
-            <span class = "icon-bar"></span>
-            <span class = "icon-bar"></span>
-          </button>
-          <h1><%= link_to root_path do %><%= image_tag('iTLogo.png', width: 51, height: 51, class: 'img-circle') %><% end %></h1>
+        <div id = "BarraSuperior-Left">
+          <h1 id = "mainBtn"><%= link_to root_path do %><%= image_tag('iTLogo.png', width: 51, height: 51, class: 'img-circle') %><% end %></h1>
         </div>
         
         <!--Obtenir els nav links i les forms per fer toggling-->
-        <div class = "collapse navbar-collapse" id = "bs-example-navbar-collapse-1">
-          <ul class = "nav navbar-nav navbar-right">
-            <% if current_user %>
-              <li>Signed in as: <%= current_user.name %> - <%= image_tag(@auth['info']['image'], width: 51, height: 51, class: 'img-circle') %></li>
-              <li id = "outBtn"><%= link_to "Sign Out", 'sign_out', method: :delete %></li>
-            <% else %>
-              <li><%= link_to "auth/twitter" do %><%= image_tag('twitter.png', width: 51, height: 51, class: 'img-circle') %><% end %></li>
-            <% end %>
-          </ul>
+        <div id = "BarraSuperior-Right">
+          <% if current_user %>
+            <div id = "BarraSuperior-Right-SignOut"><%= link_to "Sign Out", 'sign_out', method: :delete %></div>
+            <div id = "BarraSuperior-Right-Pic"><%= image_tag(@auth['info']['image'], width: 51, height: 51, class: 'img-circle') %></div>
+            <div id = "BarraSuperior-Right-LoggedIn">Signed in as: <%= current_user.name %></div>
+          <% else %>
+            <li class = "twitterLi"><%= link_to "auth/twitter" do %><%= image_tag('twitter.png', width: 51, height: 51, class: 'img-circle') %><% end %></li>
+          <% end %>
         </div> <!--Acaba la navbar-->
       </div> <!--Acaba container-fluid-->
-    </nav>
     
     <!--INTERFICIE GRAFICA EXTRA QUE ES MOSTRA EN FUNCIO DE A QUIN CONTROLLER APUNTEM-->
     <%= yield %>
