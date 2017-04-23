@@ -1,0 +1,126 @@
+.title {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.5;
+  margin-left: 30px;
+}
+
+form {
+    display: block;
+    margin-top: 10px;
+    position: relative;
+}
+
+.field-group {
+    box-sizing: border-box;
+    clear: both;
+    padding: 4px 0 4px 145px;
+    position: relative;
+    margin: 1px 0;
+    width: 100%;
+}
+
+.submit {
+    font-size: 14px;
+    background: #3572b0;
+    border-color: transparent;
+    color: #fff;
+    font-weight: 700;
+    position: relative;
+    clear: both;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 3.01px;
+    cursor: pointer;
+    display: inline;
+    font-variant: normal;
+    height: 2.14285714em;
+    line-height: 1.42857142857143;
+    margin: 0;
+    padding: 4px 10px;
+    text-decoration: none;
+    vertical-align: baseline;
+    white-space: nowrap;
+}
+
+#bootstrap-overrides label {
+    font-weight: lighter;
+}
+
+label {
+    float: left;
+    margin-left: -145px;
+    padding-top: 5px;
+    font-size: 14px;
+    position: relative;
+    text-align: right;
+    width: 130px;
+    word-wrap: break-word;
+    color: #707070;
+    cursor: default;
+    line-height: 1.42857142857143;
+    font-family: Arial,sans-serif;
+    font-weight: lighter !important;
+}
+
+input, textarea {
+    padding: 4px 5px;
+    border: 1px solid #ccc;
+    border-radius: 3.01px;
+    box-sizing: border-box;
+    font-size: inherit;
+    max-width: 600px;
+    width: 100%;
+    background: #fff;
+    color: #333;
+    font-family: inherit;
+    line-height: 1.42857142857143;
+}
+
+input {
+    height: 2.14285714em;
+    vertical-align: baseline;
+}
+
+textarea {
+    height: 192px;
+}
+
+.submit {
+    font-size: 14px;
+    background: #3572b0;
+    border-color: transparent;
+    color: #fff;
+    font-weight: 500 !important;
+    position: relative;
+    clear: both;
+    width: 110px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 3.01px;
+    cursor: pointer;
+    display: inline;
+    font-variant: normal;
+    height: 2.14285714em;
+    line-height: 1.42857142857143;
+    margin-left: 145px;
+    padding: 4px 10px;
+    text-decoration: none;
+    vertical-align: baseline;
+    white-space: nowrap;
+}
+
+.back {
+    font-size: 14px;
+    background: #fff;
+    border-color: transparent;
+    position: relative;
+    color: #3572b0;
+    margin-left: 145px;
+    padding: 4px 10px;
+}
+
+li {
+    color: #f00;
+}
