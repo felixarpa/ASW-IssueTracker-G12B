@@ -195,6 +195,12 @@ h2 {
     display: table-cell;
     box-sizing: border-box;
 
+    h1 {
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 1.5;
+    }
+
     .issue-id {
       font-size: 14px;
     }
@@ -216,6 +222,10 @@ h2 {
     .issue-description {
       margin-top: 10px;
       font-size: 14px;
+
+      .no-description {
+        font-style: italic;
+      }
     }
   }
 
@@ -230,6 +240,7 @@ h2 {
       border-radius: 5px;
       margin-top: 10px;
       padding: 10px;
+      line-height: 1.7;
 
       dl {
         display: block;
@@ -292,9 +303,39 @@ h2 {
   background-image: url('issue_kinds/improvement.svg');
 }
 
+.icon-priority {
+  top: 2px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  display: inline-block;
+  height: 16px;
+  text-align: left;
+  overflow: hidden;
+  text-indent: -9999px;
+  width: 16px;
+}
+
+.icon-minor {
+  background-image: url('issue_priorities/minor.svg');
+}
+
+.icon-trivial {
+  background-image: url('issue_priorities/trivial.svg');
+}
+
+.icon-critical {
+  background-image: url('issue_priorities/critical.svg');
+}
+
+.icon-major {
+  background-image: url('issue_priorities/major.svg');
+}
+
+.icon-blocker {
+  background-image: url('issue_priorities/blocker.svg');
+}
+
 .aui-badge {
-  background: rgba(0,0,0,.2);
-  color: rgba(51,51,51,.8);
   border-radius: 2em;
   font-size: 11px;
   font-weight: 700;
@@ -309,4 +350,14 @@ h2 {
   text-decoration: none;
   text-align: center;
   text-transform: uppercase;
+}
+
+.issue-vote-count-unvoted {
+  background: #326ca6;
+  color: #fff;
+}
+
+.issue-vote-count-voted {
+  background: rgba(0,0,0,.2);
+  color: rgba(51,51,51,.8);
 }

@@ -29,7 +29,11 @@
       </div>
 
       <div class="issue-description">
-        <p><%= @issue.description %></p>
+        <% if @issue.description %>
+          <p class="description"><%= @issue.description %></p>
+        <% else %>
+            <p class="no-description">No description provided.</p>
+        <% end %>
       </div>
 
       <div class="issue-attachments"></div>
@@ -51,14 +55,24 @@
             </div>
           </dd>
 
+          <dt>Priority</dt>
+          <dd class="priority with-icon">
+            <div class="priority-container">
+              <a href="/issues?priority=<%= @issue.priority %>">
+                <span class="icon-priority icon-<%= @issue.priority %>"></span>
+                <%= @issue.priority %>
+              </a>
+            </div>
+          </dd>
+
           <dt>Votes</dt>
           <dd class="votes">
-            <span class="aui-badge issue-vote-count">
+            <span class="aui-badge issue-vote-count-<%= @issue.votes
+                            .include?(current_user) ? 'unvoted' : 'voted' %>">
               <%= @issue.votes.size %>
             </span>
             <% if current_user %>
-              <a href="/issues/<%= @issue.id %>/vote"
-                 id="issue-vote-trigger" text="Vote/unvote this issue">
+              <a href="/issues/<%= @issue.id %>/vote">
                 <%= (@issue.votes.exists?(current_user.id)) ? 'Remove vote' :
                         'Vote for this issue' %>
               </a>
