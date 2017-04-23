@@ -15,9 +15,9 @@ ActiveRecord::Schema.define(version: 20170423160725) do
   create_table "issues", force: :cascade do |t|
     t.string   "title"
     t.string   "description"
-    t.datetime "created_at",                                           null: false
-    t.datetime "updated_at",                                           null: false
-    t.string   "kind",        default: "/images/issue_types/task.svg"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "kind",        default: 0
     t.integer  "user_id"
     t.integer  "priority",    default: 2
   end
