@@ -1,5 +1,6 @@
 class IssuesController < ApplicationController
   helper_method :sort_column, :sort_direction
+  before_action :set_auth
   before_action :set_issue, only: [:show, :edit, :update, :destroy]
 
   # GET /issues
@@ -81,5 +82,9 @@ class IssuesController < ApplicationController
 
     def sort_direction
       %w[asc desc].include?(params[:direction]) ? params[:direction] : ''
+    end
+    
+    def set_auth
+      @auth = session[:omniauth] if session[:omniauth]
     end
 end
