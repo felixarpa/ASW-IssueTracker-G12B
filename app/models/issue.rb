@@ -1,8 +1,7 @@
 class Issue < ApplicationRecord
-  enum kind: { bug: '/images/issue_types/bug.svg',
-               enhancement: '/images/issue_types/enhancement.svg',
-               proposal: '/images/issue_types/suggestion.svg',
-               task: '/images/issue_types/task.svg' }
-    belongs_to :user
-    has_many :assigned_users, :class_name => "User"
+  enum kind: [ :bug, :enhancement, :proposal, :task ]
+  belongs_to :user
+  has_many :assigned_users, :class_name => "User"
+  has_and_belongs_to_many :votes, join_table: 'table_votes',
+                          class_name: 'User'
 end

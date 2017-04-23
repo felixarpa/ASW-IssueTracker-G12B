@@ -1,63 +1,56 @@
 <p id="notice"><%= notice %></p>
 
-<div class="aui-page-panel-inner">
-  <div id="repo-content" class="aui-page-panel-content"
-       data-module="repo/index">
-    <div class="aui-item section-title">
-      <h1>Issues</h1>
-    </div>
+<div class="header">
+  <div class="section-title">
+    <h1>Issues</h1>
+  </div>
+  <div class="page-actions"></div>
+</div>
 
-    <div id="issues" class="clearfix">
-      <div id="issue-header" class="clearfix">
-        <span class="issue-id">
-          Issue #<%= @issue.id %>
-        </span>
+<div class="issue-main-view">
+  <div class="issue-header">
+      <span class="issue-id">
+        Issue #<%= @issue.id %>
+      </span>
+  </div>
+
+  <div class="issue-main-content">
+    <div class="issue-info">
+      <div class="issues-toolbar"></div>
+
+      <h1 id="issue-title"><%= @issue.title %></h1>
+
+      <div class="issue-author">
+        <span title="author-name"><%= User.find_by(id: @issue.user_id).name
+        %></span>
+        created an issue
+        <time class="created_at"><%= @issue.created_at.strftime('%Y-%m-%d')
+        %></time>
       </div>
 
-      <div class="aui-group">
-        <div class="aui-item">
+      <div class="issue-description">
+        <p><%= @issue.description %></p>
+      </div>
 
-          <div class="issue-main-content">
+      <div class="issue-attachments"></div>
 
-            <h1 id="issue-title"><%= @issue.title %></h1>
+      <div class="issue-comments-container"></div>
+    </div>
 
-            <div class="issue-author">
-              <div class="author-name">
-                <span title="author">example_user</span>
-              </div>
-              created an issue
-              <time class="created_at"><%= @issue.created_at.strftime('%Y-%m-%d')
-              %></time>
+    <div class="sidebar">
+      <div class="issue-attrs">
+        <dl>
+          <dt>Type</dt>
+          <dd class="type with-icon">
+            <div class="type-container">
+              <a href="/issues?kind=<%= @issue.kind %>">
+                <span class="icon-kind icon-<%= @issue.kind %>"></span>
+                <%= @issue.kind %>
+              </a>
             </div>
-
-            <div class="issue-description">
-              <p><%= @issue.description %></p>
-            </div>
-
-            <div class="issue-attachments" id="attachments"></div>
-          </div>
-
-          <div class="issue-comments-container"></div>
-        </div>
-
-        <div class="aui-item sidebar">
-          <div class="issue-attrs">
-            <dl>
-              <dt>Type</dt>
-              <dd class="type with-icon">
-                <a class="ref issue-type" href="/issues/<%= @issue.id %>/users">
-                  <img src=<%= Issue.kinds[@issue.kind] %>>
-                </a>
-                <a href="/issues/<%= @issue.id %>/users">
-                  <%= @issue.kind %>
-                </a>
-              </dd>
-            </dl>
-          </div>
-        </div>
+          </dd>
+        </dl>
       </div>
     </div>
   </div>
 </div>
-
-<%= stylesheet_link_tag 'issues_show' %>

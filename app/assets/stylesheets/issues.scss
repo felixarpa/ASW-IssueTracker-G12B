@@ -186,3 +186,108 @@ h2 {
     background-color: #f5f5f5;
   }
 }
+
+.issue-main-content {
+  display: table;
+  width: 100%;
+
+  .issue-info {
+    display: table-cell;
+    box-sizing: border-box;
+
+    .issue-id {
+      font-size: 14px;
+    }
+
+    .issue-author {
+
+      span {
+        font-weight: bold;
+        float: left;
+        margin-right: 5px;
+      }
+
+      .created_at {
+        color: #707070;
+        font-size: small;
+      }
+    }
+
+    .issue-description {
+      margin-top: 10px;
+      font-size: 14px;
+    }
+  }
+
+  .sidebar{
+    display: table-cell;
+    box-sizing: border-box;
+    padding-left: 40px;
+    width: 350px;
+
+    .issue-attrs {
+      border: 1px #ccc solid;
+      border-radius: 5px;
+      margin-top: 10px;
+      padding: 10px;
+
+      dl {
+        display: block;
+        -webkit-margin-before: 1em;
+        -webkit-margin-after: 1em;
+        -webkit-margin-start: 0;
+        -webkit-margin-end: 0;
+        margin: 5px 0;
+        padding-left: 120px;
+
+        dd {
+          margin: 0;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          display: block;
+        }
+
+        dd.with-icon {
+          position: relative;
+        }
+
+        dt {
+          display: block;
+          float: left;
+          margin-left: -135px;
+          text-align: right;
+          width: 120px;
+        }
+      }
+    }
+  }
+}
+
+.icon-kind {
+  top: 2px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  display: inline-block;
+  height: 16px;
+  text-align: left;
+  overflow: hidden;
+  text-indent: -9999px;
+  width: 16px;
+}
+
+.icon-task {
+  background-image: url('issue_kinds/task.svg');
+}
+
+.icon-bug {
+  background-image: url('issue_kinds/bug.svg');
+}
+
+.icon-proposal {
+  background-image: url('issue_kinds/suggestion.svg');
+}
+
+.icon-enhancement {
+  background-image: url('issue_kinds/improvement.svg');
+}
