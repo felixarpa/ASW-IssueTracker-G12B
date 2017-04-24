@@ -30,12 +30,12 @@ ActiveRecord::Schema.define(version: 20170424001656) do
     t.index ["user_id"], name: "index_table_votes_on_user_id"
   end
 
-  create_table "table_watching", force: :cascade do |t|
+  create_table "table_watchers", force: :cascade do |t|
     t.integer "user_id"
     t.integer "issue_id"
-    t.index ["issue_id", "user_id"], name: "index_table_watching_on_issue_id_and_user_id", unique: true
-    t.index ["issue_id"], name: "index_table_watching_on_issue_id"
-    t.index ["user_id"], name: "index_table_watching_on_user_id"
+    t.index ["issue_id", "user_id"], name: "index_table_watchers_on_issue_id_and_user_id", unique: true
+    t.index ["issue_id"], name: "index_table_watchers_on_issue_id"
+    t.index ["user_id"], name: "index_table_watchers_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
