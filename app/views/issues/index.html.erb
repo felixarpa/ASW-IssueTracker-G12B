@@ -22,17 +22,17 @@
       <p class="filter-label">Filters:</p>
       <ul class="filter-status">
         <li id="all" class="aui-button">
-          <a href="?">All</a>
+          <a href="/issues">All</a>
         </li>
         <li id="open" class="aui-button">
-          <a href="?status=open">Open</a>
+          <a href="/issues?status=open">Open</a>
         </li>
         <% if current_user %>
           <li id="mine" class="aui-button">
-            <a href="?responsible=<%= current_user.name %>">My issues</a>
+            <a href="/issues?responsible=<%= current_user.name %>">My issues</a>
           </li>
           <li id="watching" class="aui-button">
-            <a href="?watching=<%= current_user.name %>">Watching</a>
+            <a href="/issues?watching=<%= current_user.name %>">Watching</a>
           </li>
         <% end %>
       </ul>
@@ -45,6 +45,8 @@
     <thead>
     <%= sortable "id", "Title" %>
     <%= sortable "kind", "T" %>
+    <%= sortable "priority", "P" %>
+    <%= sortable "votes", "Votes" %>
     <%= sortable "created_at", "Created" %>
     <%= sortable "updated_at", "Updated" %>
     </thead>
@@ -55,9 +57,24 @@
             <%= link_to '#' << issue.id.to_s << ': ' << issue.title, issue %>
           </td>
           <td class="text">
-            <a href="?kind=<%= issue.kind %>" class="icon-kind
+            <a href="/issues?kind=<%= issue.kind %>" class="icon-kind
             icon-<%= issue.kind %>" title="Filter by type: <%= issue.kind %>">
               <%= issue.kind %></a>
+          </td>
+          <td class="text">
+            <a href="/issues?priority=<%= issue.priority %>"
+               class="icon-priority icon-<%= issue.priority %>"
+               title="Filter by priority: <%= issue.priority %>">
+              <%= issue.priority %>
+            </a>
+          </td>
+          <td class="text">
+            <% if issue.votes.size > 0 %>
+              <span class="aui-badge issue-count-<%= issue.votes
+                                .include?(current_user) ? 'no' : 'yes' %>">
+                <%= issue.votes.size %>
+              </span>
+            <% end %>
           </td>
           <td class="date">
             <%= issue.created_at.to_date %>
