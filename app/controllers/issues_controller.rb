@@ -89,17 +89,10 @@ class IssuesController < ApplicationController
     @issue = Issue.find(params[:id])
   end
 
-<<<<<<< HEAD
     # Never trust parameters from the scary internet, only allow the white list through.
     def issue_params
-      params.require(:issue).permit(:title, :description, :kind, :priority, :status)
+      params.require(:issue).permit(:title, :description, :kind, :priority, :status, :attachedfiles)
     end
-=======
-  # Never trust parameters from the scary internet, only allow the white list through.
-  def issue_params
-    params.require(:issue).permit(:title, :description, :kind, :priority, :attachedfiles)
-  end
->>>>>>> 89414c68f4c4c8cb3999ae9cd34be7e53595429a
 
   def sort_column
     Issue.column_names.include?(params[:sort]) ? params[:sort] : ''
