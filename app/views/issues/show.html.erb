@@ -21,8 +21,7 @@
       <h1 id="issue-title"><%= @issue.title %></h1>
 
       <div class="issue-author">
-        <span title="author-name"><%= User.find_by(id: @issue.user_id).name
-        %></span>
+        <span title="author-name"><%= @issue.user.name %></span>
         created an issue
         <time class="created_at"><%= @issue.created_at.strftime('%Y-%m-%d')
         %></time>

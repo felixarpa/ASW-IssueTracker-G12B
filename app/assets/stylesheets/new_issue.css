@@ -42,6 +42,7 @@ form {
     text-decoration: none;
     vertical-align: baseline;
     white-space: nowrap;
+    margin-top: 20px;
 }
 
 #bootstrap-overrides label {
@@ -121,6 +122,34 @@ textarea {
     padding: 4px 10px;
 }
 
+.back-button {
+    padding-top: 10px;
+}
+
 li {
     color: #f00;
+}
+
+select {
+    box-sizing: border-box;
+    background: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    color: inherit;
+    cursor: pointer;
+    display: inline-block;
+    filter: none;
+    font-family: inherit;
+    font-size: inherit;
+    font-variant: normal;
+    font-weight: 400;
+    line-height: 1.4285714285714;
+    margin: 0;
+    padding: 4px 10px;
+    text-decoration: none;
+    text-shadow: 0 1px 0 #fff;
+    vertical-align: top;
+    white-space: nowrap;
+    width: 250px;
+    height: 30px;
 }
