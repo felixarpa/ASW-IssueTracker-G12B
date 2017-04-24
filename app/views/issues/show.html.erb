@@ -21,7 +21,14 @@
       <h1 id="issue-title"><%= @issue.title %></h1>
 
       <div class="issue-author">
-        <span title="author-name"><%= @issue.user.name %></span>
+        <a href="/issues?responsible=<%= @issue.user.name %>">
+          <div class="aui-avatar aui-avatar-medium">
+            <div class="aui-avatar-inner">
+              <img src=<%= @issue.user.image_url %>>
+            </div>
+          </div>
+          <span title="author-name"><%= @issue.user.name %></span>
+        </a>
         created an issue
         <time class="created_at"><%= @issue.created_at.strftime('%Y-%m-%d')
         %></time>
