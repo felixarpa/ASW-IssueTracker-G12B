@@ -91,6 +91,22 @@
             <% end %>
           </dd>
         </dl>
+        
+        <dl>
+          <dt>Status</dt>
+          <dd class="status">
+            <% if @issue.status == 1 %>
+              <%= form_tag open, method: :post do %>
+              <%= submit_tag 'Open' %>
+              <% end %>
+            <% else %>
+              <%= form_tag close, method: :post do %>
+              <%= submit_tag 'Close' %>
+              <% end %>
+            <% end %>
+          </dd>
+        </dl>
+        
       </div>
     </div>
   </div>

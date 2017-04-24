@@ -10,16 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170424001656) do
+ActiveRecord::Schema.define(version: 20170424152834) do
 
   create_table "issues", force: :cascade do |t|
     t.string   "title"
     t.string   "description"
-    t.datetime "created_at",                                           null: false
-    t.datetime "updated_at",                                           null: false
-    t.string   "kind",        default: "/images/issue_types/task.svg"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "kind",        default: 0
     t.integer  "user_id"
     t.integer  "priority",    default: 2
+    t.integer  "status",      default: 0
   end
 
   create_table "table_votes", force: :cascade do |t|
