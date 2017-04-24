@@ -35,10 +35,13 @@
         <% end %>
       </div>
 
-      <div class="issue-attachments">
-        <ul>
+      <div class="attachments">
+        <ul class="issue-attachment-list attachment-list clearfix">
           <% @issue.attached_files.each do |attached_file| %>
-              <li><a href="<%= attached_file.file.url %>"><%= attached_file.file_file_name %></a></li>
+              <li><a class="attachment-link" target="_blank" href="<%= attached_file.file.url %>">
+                <span class="placeholder default"></span>
+                <span class="filename"><%= attached_file.file_file_name %></span>
+              </a></li>
           <% end %>
         </ul>
       </div>
