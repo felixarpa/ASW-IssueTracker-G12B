@@ -33,7 +33,7 @@ class IssuesController < ApplicationController
   def create
     @issue = Issue.new(issue_params)
     @issue.user = current_user
-    @issue.user_id = current_user.id
+    #@issue.user_id = current_user.id
 
     respond_to do |format|
       if @issue.save
