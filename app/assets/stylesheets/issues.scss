@@ -346,19 +346,19 @@ h2 {
 }
 
 .icon-task {
-  background-image: url('issue_kinds/task.svg');
+  background-image: image-url('issue_kinds/task.svg');
 }
 
 .icon-bug {
-  background-image: url('issue_kinds/bug.svg');
+  background-image: image-url('issue_kinds/bug.svg');
 }
 
 .icon-proposal {
-  background-image: url('issue_kinds/suggestion.svg');
+  background-image: image-url('issue_kinds/suggestion.svg');
 }
 
 .icon-enhancement {
-  background-image: url('issue_kinds/improvement.svg');
+  background-image: image-url('issue_kinds/improvement.svg');
 }
 
 .icon-priority {
@@ -374,23 +374,23 @@ h2 {
 }
 
 .icon-minor {
-  background-image: url('issue_priorities/minor.svg');
+  background-image: image-url('issue_priorities/minor.svg');
 }
 
 .icon-trivial {
-  background-image: url('issue_priorities/trivial.svg');
+  background-image: image-url('issue_priorities/trivial.svg');
 }
 
 .icon-critical {
-  background-image: url('issue_priorities/critical.svg');
+  background-image: image-url('issue_priorities/critical.svg');
 }
 
 .icon-major {
-  background-image: url('issue_priorities/major.svg');
+  background-image: image-url('issue_priorities/major.svg');
 }
 
 .icon-blocker {
-  background-image: url('issue_priorities/blocker.svg');
+  background-image: image-url('issue_priorities/blocker.svg');
 }
 
 .aui-badge {
