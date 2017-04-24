@@ -542,6 +542,19 @@ h2 {
     text-align: -webkit-match-parent;
   }
 
+  .delete-attachment {
+    color: #707070;
+    font-weight: 800;
+    height: 16px;
+    position: absolute;
+    right: -12px;
+    top: -8px;
+    width: 16px;
+  }
+  .delete-attachment:hover {
+    color: #333;
+    text-decoration: none;
+  }
 }
 
 .attachments {
