@@ -21,17 +21,6 @@
     <%= f.text_area :description %>
   </div>
 
-  <div class="field-group">
-    <%= f.label :kind %>
-    <%= f.select(:kind, [['bug'], ['enhancement'], ['proposal'], ['task']]) %>
-  </div>
-
-  <div class="field-group">
-    <%= f.label :priority %>
-    <%= f.select(:priority, [['trivial'], ['minor'], ['major'], ['critical'],
-                             ['blocker']]) %>
-  </div>
-
   <div class="actions">
     <%= f.submit 'Create issue', :class => 'submit' %>
   </div>
