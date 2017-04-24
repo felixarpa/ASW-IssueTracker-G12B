@@ -34,7 +34,7 @@ class IssuesController < ApplicationController
     @issue = Issue.new(issue_params)
     # puts "POST-ISSUE-DEBUG " + @issue.user_id
     # puts "POST-ISSUE-DEBUG " + @current_user.id
-    @issue.belongs_to = @current_user.id
+    @issue.user = @current_user
     # @issue.user_id = @current_user.id
 
     respond_to do |format|
