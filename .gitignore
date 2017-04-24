@@ -42,3 +42,5 @@ bower.json
 
 .idea
 .idea/*
+/public/assets/
+app/models/attachment.rb

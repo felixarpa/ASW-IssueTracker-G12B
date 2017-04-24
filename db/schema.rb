@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170423160725) do
+ActiveRecord::Schema.define(version: 20170424001656) do
 
   create_table "issues", force: :cascade do |t|
     t.string   "title"
     t.string   "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.string   "kind",        default: 0
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
+    t.string   "kind",        default: "/images/issue_types/task.svg"
     t.integer  "user_id"
     t.integer  "priority",    default: 2
   end
@@ -30,12 +30,20 @@ ActiveRecord::Schema.define(version: 20170423160725) do
     t.index ["user_id"], name: "index_table_votes_on_user_id"
   end
 
+  create_table "table_watchers", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "issue_id"
+    t.index ["issue_id", "user_id"], name: "index_table_watchers_on_issue_id_and_user_id", unique: true
+    t.index ["issue_id"], name: "index_table_watchers_on_issue_id"
+    t.index ["user_id"], name: "index_table_watchers_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
+    t.string   "provider"
     t.string   "uid"
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string   "provider"
   end
 
 end

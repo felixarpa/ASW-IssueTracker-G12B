@@ -32,6 +32,8 @@ class IssuesController < ApplicationController
   # POST /issues.json
   def create
     @issue = Issue.new(issue_params)
+    @issue.user = current_user
+    #@issue.user_id = current_user.id
 
     respond_to do |format|
       if @issue.save
@@ -76,7 +78,7 @@ class IssuesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def issue_params
-      params.require(:issue).permit(:title, :description)
+      params.require(:issue).permit(:title, :description, :kind, :priority)
     end
 
     def sort_column
