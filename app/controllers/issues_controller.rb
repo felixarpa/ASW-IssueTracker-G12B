@@ -32,7 +32,10 @@ class IssuesController < ApplicationController
   # POST /issues.json
   def create
     @issue = Issue.new(issue_params)
-    @issue.user_id = @current_user.id
+    puts "POST-ISSUE-DEBUG " + @issue.user_id
+    puts "POST-ISSUE-DEBUG " + @current_user.id
+    @issue.user = @current_user
+    # @issue.user_id = @current_user.id
 
     respond_to do |format|
       if @issue.save
