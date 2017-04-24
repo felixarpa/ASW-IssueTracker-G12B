@@ -40,7 +40,7 @@
 
     <div class="field-group">
       <%= f.label :attachments %>
-      <ul id="attachment-list" class="attachment-list"></ul>
+      <ul id="attached-files-list" class="attachment-list"></ul>
       <div class="myFile">
         <button class="aui-button">Select files</button>
         <%= file_field_tag 'attached_files[]', type: :file, id: 'attachment-upload', class:'assistive', onchange: 'javascript:updateUploads("new")', multiple: true %>
