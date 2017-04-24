@@ -67,6 +67,15 @@
           </dd>
         </dl>
         <dl>
+          <dt>Status</dt>
+          <dd class="status with-icon">
+            <a href="/issues?status=<%= @issue.status %>">
+              <span class="icon-status icon-<%= @issue.status %>"></span>
+              <%= @issue.status %>
+            </a>
+          </dd>
+        </dl>
+        <dl>
           <dt>Votes</dt>
           <dd class="votes">
             <span class="aui-badge issue-count-<%= @issue.votes

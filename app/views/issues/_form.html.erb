@@ -31,6 +31,12 @@
     <%= f.select(:priority, [['trivial'], ['minor'], ['major'], ['critical'],
                              ['blocker']]) %>
   </div>
+  
+  <div class="field-group">
+    <%= f.label :status %>
+    <%= f.select(:status, [['New Issue'], ['Open'], ['On hold'], ['Invalid Issue'],
+                             ['Resolved'], ['Closed']]) %>
+  </div>
 
     <div class="field-group">
       <%= f.label :attachments %>

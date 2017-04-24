@@ -9,9 +9,9 @@ class IssuesController < ApplicationController
     @issues = Issue.all.order(sort_column + ' ' + sort_direction)
     @issues = @issues.where(kind: params[:kind]) if params[:kind]
     @issues = @issues.where(priority: params[:priority]) if params[:priority]
-    # @issues = @issues.where(status: params[:status]) if params[:status]
-    # @issues = @issues.where(watchers.exists?(@current_user.id)) if params[:watching]
-    # @issues = @issues.where(assignee: params[:responsible]) if params[:responsible]
+    @issues = @issues.where(status: params[:status]) if params[:status]
+    #@issues = @issues.where(watchers.exists?(@current_user.id)) if params[:watching]
+    #@issues = @issues.where(assignee: params[:responsible]) if params[:responsible]
   end
 
   # GET /issues/1
@@ -83,10 +83,10 @@ class IssuesController < ApplicationController
     @issue = Issue.find(params[:id])
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
-  def issue_params
-    params.require(:issue).permit(:title, :description, :kind, :priority, :attachedfiles)
-  end
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def issue_params
+      params.require(:issue).permit(:title, :description, :kind, :priority, :status, :attachedfiles)
+    end
 
   def sort_column
     Issue.column_names.include?(params[:sort]) ? params[:sort] : ''
