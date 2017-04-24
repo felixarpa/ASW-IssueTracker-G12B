@@ -79,7 +79,7 @@
         <dl>
           <dt>Watchers</dt>
           <dd class="watchers">
-            <span class="aui-badge issue-count-<%= @issue.votes
+            <span class="aui-badge issue-count-<%= @issue.watchers
                                                             .include?(current_user) ? 'no' : 'yes' %>">
               <%= @issue.watchers.size %>
             </span>
