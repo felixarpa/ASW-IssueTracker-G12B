@@ -96,7 +96,7 @@
           <dt><!--< % (@issue.status == 0) ? 'Status: open' : 'Status: closed' %>--> Status </dt>
           <dd class="status">
             <% if current_user %>
-              <a href="/issues/<%= @issue.id %>/status/toggle">
+              <a href="/issues/<%= @issue.id %>/status">
                 Toggle
               </a>
               <!--< %= (@issue.status == 0) ? 'Open' : 'Close' %>-->

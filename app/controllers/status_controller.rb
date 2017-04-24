@@ -1,8 +1,8 @@
 class WatchController < ApplicationController
   before_action :set_issue
 
-  # GET /status/toggle
-  def toggle
+  # GET /status
+  def show
     if @issue.status == 0
       @issue.status = 1
     else
