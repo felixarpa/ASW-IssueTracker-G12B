@@ -16,7 +16,9 @@
 
   <div class="issue-main-content">
     <div class="issue-info">
-      <div class="issues-toolbar"></div>
+      <div class="issues-toolbar">
+        <div><%= link_to "Delete", 'delete_issue', method: :delete %></div>
+      </div>
 
       <h1 id="issue-title"><%= @issue.title %></h1>
 
