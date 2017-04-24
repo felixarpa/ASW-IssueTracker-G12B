@@ -43,6 +43,8 @@
     <thead>
     <%= sortable "id", "Title" %>
     <%= sortable "kind", "T" %>
+    <%= sortable "priority", "P" %>
+    <%= sortable "votes", "Votes" %>
     <%= sortable "created_at", "Created" %>
     <%= sortable "updated_at", "Updated" %>
     </thead>
@@ -56,6 +58,21 @@
             <a href="/issues?kind=<%= issue.kind %>" class="icon-kind
             icon-<%= issue.kind %>" title="Filter by type: <%= issue.kind %>">
               <%= issue.kind %></a>
+          </td>
+          <td class="text">
+            <a href="/issues?priority=<%= issue.priority %>"
+               class="icon-priority icon-<%= issue.priority %>"
+               title="Filter by priority: <%= issue.priority %>">
+              <%= issue.priority %>
+            </a>
+          </td>
+          <td class="text">
+            <% if issue.votes.size > 0 %>
+              <span class="aui-badge issue-vote-count-<%= issue.votes
+                                .include?(current_user) ? 'unvoted' : 'voted' %>">
+                <%= issue.votes.size %>
+              </span>
+            <% end %>
           </td>
           <td class="date">
             <%= issue.created_at.to_date %>
