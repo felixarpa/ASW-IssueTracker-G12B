@@ -9,9 +9,9 @@ class IssuesController < ApplicationController
     @issues = Issue.all.order(sort_column + ' ' + sort_direction)
     @issues = @issues.where(kind: params[:kind]) if params[:kind]
     @issues = @issues.where(priority: params[:priority]) if params[:priority]
-    #@issues = @issues.where(status: params[:status]) if params[:status]
-    #@issues = @issues.where(watchers.exists?(@current_user.id)) if params[:watching]
-    #@issues = @issues.where(assignee: params[:responsible]) if params[:responsible]
+    # @issues = @issues.where(status: params[:status]) if params[:status]
+    # @issues = @issues.where(watchers.exists?(@current_user.id)) if params[:watching]
+    # @issues = @issues.where(assignee: params[:responsible]) if params[:responsible]
   end
 
   # GET /issues/1
@@ -32,16 +32,23 @@ class IssuesController < ApplicationController
   # POST /issues.json
   def create
     @issue = Issue.new(issue_params)
-    @issue.user = current_user
-    #@issue.user_id = current_user.id
+    # @issue.user = current_user
+    @issue.user_id = 1
 
     respond_to do |format|
       if @issue.save
-        format.html { redirect_to @issue, notice: 'Issue was successfully created.' }
-        format.json { render :show, status: :created, location: @issue }
+
+        if params[:attached_files]
+          params[:attached_files].each { |attached_file|
+            @issue.attached_files.create(file: attached_file)
+          }
+        end
+
+        format.html {redirect_to @issue, notice: 'Issue was successfully created.'}
+        format.json {render :show, status: :created, location: @issue}
       else
-        format.html { render :new }
-        format.json { render json: @issue.errors, status: :unprocessable_entity }
+        format.html {render :new}
+        format.json {render json: @issue.errors, status: :unprocessable_entity}
       end
     end
   end
@@ -51,11 +58,11 @@ class IssuesController < ApplicationController
   def update
     respond_to do |format|
       if @issue.update(issue_params)
-        format.html { redirect_to @issue, notice: 'Issue was successfully updated.' }
-        format.json { render :show, status: :ok, location: @issue }
+        format.html {redirect_to @issue, notice: 'Issue was successfully updated.'}
+        format.json {render :show, status: :ok, location: @issue}
       else
-        format.html { render :edit }
-        format.json { render json: @issue.errors, status: :unprocessable_entity }
+        format.html {render :edit}
+        format.json {render json: @issue.errors, status: :unprocessable_entity}
       end
     end
   end
@@ -65,31 +72,31 @@ class IssuesController < ApplicationController
   def destroy
     @issue.destroy
     respond_to do |format|
-      format.html { redirect_to issues_url, notice: 'Issue was successfully destroyed.' }
-      format.json { head :no_content }
+      format.html {redirect_to issues_url, notice: 'Issue was successfully destroyed.'}
+      format.json {head :no_content}
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_issue
-      @issue = Issue.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_issue
+    @issue = Issue.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def issue_params
-      params.require(:issue).permit(:title, :description, :kind, :priority)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def issue_params
+    params.require(:issue).permit(:title, :description, :kind, :priority, :attachedfiles)
+  end
 
-    def sort_column
-      Issue.column_names.include?(params[:sort]) ? params[:sort] : ''
-    end
+  def sort_column
+    Issue.column_names.include?(params[:sort]) ? params[:sort] : ''
+  end
 
-    def sort_direction
-      %w[asc desc].include?(params[:direction]) ? params[:direction] : ''
-    end
-    
-    def set_auth
-      @auth = session[:omniauth] if session[:omniauth]
-    end
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : ''
+  end
+
+  def set_auth
+    @auth = session[:omniauth] if session[:omniauth]
+  end
 end

@@ -20,30 +20,6 @@ form {
     width: 100%;
 }
 
-.submit {
-    font-size: 14px;
-    background: #3572b0;
-    border-color: transparent;
-    color: #fff;
-    font-weight: 700;
-    position: relative;
-    clear: both;
-    width: 100%;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 3.01px;
-    cursor: pointer;
-    display: inline;
-    font-variant: normal;
-    height: 2.14285714em;
-    line-height: 1.42857142857143;
-    margin: 0;
-    padding: 4px 10px;
-    text-decoration: none;
-    vertical-align: baseline;
-    white-space: nowrap;
-    margin-top: 20px;
-}
 
 #bootstrap-overrides label {
     font-weight: lighter;
@@ -93,12 +69,12 @@ textarea {
     background: #3572b0;
     border-color: transparent;
     color: #fff;
-    font-weight: 500 !important;
+    font-weight: 700;
+    -webkit-font-smoothing: antialiased;
     position: relative;
     clear: both;
     width: 110px;
     box-sizing: border-box;
-    border: 1px solid #ccc;
     border-radius: 3.01px;
     cursor: pointer;
     display: inline;
@@ -112,21 +88,17 @@ textarea {
     white-space: nowrap;
 }
 
-.back {
-    font-size: 14px;
-    background: transparent;
-    border-color: transparent;
-    position: relative;
-    color: #3572b0;
-    margin-left: 145px;
-    padding: 4px 10px;
+
+
+.cancel {
+    padding: 5px 10px;
 }
 
 .back-button {
     padding-top: 10px;
 }
 
-li {
+.errors li {
     color: #f00;
 }
 
@@ -152,4 +124,8 @@ select {
     white-space: nowrap;
     width: 250px;
     height: 30px;
+}
+
+.actions {
+    margin-top: 10px;
 }

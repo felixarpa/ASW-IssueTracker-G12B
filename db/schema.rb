@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170424001656) do
+ActiveRecord::Schema.define(version: 20170424165557) do
+
+  create_table "attached_files", force: :cascade do |t|
+    t.integer  "issue_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.string   "file_file_name"
+    t.string   "file_content_type"
+    t.integer  "file_file_size"
+    t.datetime "file_updated_at"
+    t.index ["issue_id"], name: "index_attached_files_on_issue_id"
+  end
 
   create_table "issues", force: :cascade do |t|
     t.string   "title"
