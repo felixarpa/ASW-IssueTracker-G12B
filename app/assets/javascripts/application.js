@@ -14,3 +14,15 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+
+updateUploads = function(action) {
+    var input = document.getElementById('attachment-upload');
+    if (input.files.length > 0 && action === 'new') {
+        var output = document.getElementById('attachment-list');
+
+        output.innerHTML = '';
+        for (var i = 0; i < input.files.length; ++i) {
+            output.innerHTML += '<li>' + input.files.item(i).name + '</li>';
+        }
+    }
+}
