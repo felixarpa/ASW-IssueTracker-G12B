@@ -34,8 +34,12 @@
   
   <div class="field-group">
     <%= f.label :status %>
-    <%= f.select(:status, [['New Issue'], ['Open'], ['On hold'], ['Invalid Issue'],
-                             ['Resolved'], ['Closed']]) %>
+    <%= f.select(:status, [['New', 'new_issue'],
+                           ['Open', 'open'],
+                           ['On hold', 'on_hold'],
+                           ['Invalid', 'invalid_issue'],
+                           ['Resolved', 'resolved'],
+                           ['Closed', 'closed']]) %>
   </div>
 
     <div class="field-group">

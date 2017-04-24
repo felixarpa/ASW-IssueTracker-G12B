@@ -26,12 +26,12 @@ ActiveRecord::Schema.define(version: 20170424204211) do
   create_table "issues", force: :cascade do |t|
     t.string   "title"
     t.string   "description"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.integer  "kind",        default: 0
     t.integer  "user_id"
     t.integer  "priority",    default: 2
-    t.integer  "status",      default: 0
+    t.string   "status",      default: "New"
   end
 
   create_table "table_votes", force: :cascade do |t|
