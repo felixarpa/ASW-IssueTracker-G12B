@@ -46,6 +46,7 @@
     <%= sortable "id", "Title" %>
     <%= sortable "kind", "T" %>
     <%= sortable "priority", "P" %>
+    <%= sortable "status", "S" %>
     <%= sortable "votes", "Votes" %>
     <%= sortable "created_at", "Created" %>
     <%= sortable "updated_at", "Updated" %>
@@ -57,8 +58,9 @@
             <%= link_to '#' << issue.id.to_s << ': ' << issue.title, issue %>
           </td>
           <td class="text">
-            <a href="/issues?kind=<%= issue.kind %>" class="icon-kind
-            icon-<%= issue.kind %>" title="Filter by type: <%= issue.kind %>">
+            <a href="/issues?kind=<%= issue.kind %>"
+               class="icon-kind icon-<%= issue.kind %>"
+               title="Filter by type: <%= issue.kind %>">
               <%= issue.kind %></a>
           </td>
           <td class="text">
@@ -66,6 +68,13 @@
                class="icon-priority icon-<%= issue.priority %>"
                title="Filter by priority: <%= issue.priority %>">
               <%= issue.priority %>
+            </a>
+          </td>
+          <td class="text">
+            <a href="/issues?status=<%= issue.status %>"
+               class="icon-status icon-<%= issue.status %>"
+               title="Filter by status: <%= issue.status %>">
+              <%= issue.status %>
             </a>
           </td>
           <td class="text">

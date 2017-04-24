@@ -35,7 +35,13 @@
         <% end %>
       </div>
 
-      <div class="issue-attachments"></div>
+      <div class="issue-attachments">
+        <ul>
+          <% @issue.attached_files.each do |attached_file| %>
+              <li><a href="<%= attached_file.file.url %>"><%= attached_file.file_file_name %></a></li>
+          <% end %>
+        </ul>
+      </div>
 
       <div class="issue-comments-container"></div>
     </div>
@@ -57,6 +63,15 @@
             <a href="/issues?priority=<%= @issue.priority %>">
               <span class="icon-priority icon-<%= @issue.priority %>"></span>
               <%= @issue.priority %>
+            </a>
+          </dd>
+        </dl>
+        <dl>
+          <dt>Status</dt>
+          <dd class="status with-icon">
+            <a href="/issues?status=<%= @issue.status %>">
+              <span class="icon-status icon-<%= @issue.status %>"></span>
+              <%= @issue.status %>
             </a>
           </dd>
         </dl>
