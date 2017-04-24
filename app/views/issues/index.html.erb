@@ -22,17 +22,17 @@
       <p class="filter-label">Filters:</p>
       <ul class="filter-status">
         <li id="all" class="aui-button">
-          <a href="/issues">All</a>
+          <a href="?">All</a>
         </li>
         <li id="open" class="aui-button">
-          <a href="/issues?status=open">Open</a>
+          <a href="?status=open">Open</a>
         </li>
         <% if current_user %>
           <li id="mine" class="aui-button">
-            <a href="/issues?responsible=<%= current_user.name %>">My issues</a>
+            <a href="?responsible=<%= current_user.name %>">My issues</a>
           </li>
           <li id="watching" class="aui-button">
-            <a href="/issues?watching=<%= current_user.name %>">Watching</a>
+            <a href="?watching=<%= current_user.name %>">Watching</a>
           </li>
         <% end %>
       </ul>
@@ -55,7 +55,7 @@
             <%= link_to '#' << issue.id.to_s << ': ' << issue.title, issue %>
           </td>
           <td class="text">
-            <a href="/issues?kind=<%= issue.kind %>" class="icon-kind
+            <a href="?kind=<%= issue.kind %>" class="icon-kind
             icon-<%= issue.kind %>" title="Filter by type: <%= issue.kind %>">
               <%= issue.kind %></a>
           </td>

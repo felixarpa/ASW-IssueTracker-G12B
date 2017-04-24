@@ -64,7 +64,7 @@
         <dl>
           <dt>Votes</dt>
           <dd class="votes">
-            <span class="aui-badge issue-vote-count-<%= @issue.votes
+            <span class="aui-badge issue-count-<%= @issue.votes
                             .include?(current_user) ? 'no' : 'yes' %>">
               <%= @issue.votes.size %>
             </span>
@@ -81,7 +81,7 @@
           <dd class="watchers">
             <span class="aui-badge issue-count-<%= @issue.votes
                                                             .include?(current_user) ? 'no' : 'yes' %>">
-              <%= @issue.votes.size %>
+              <%= @issue.watchers.size %>
             </span>
             <% if current_user %>
                 <a href="/issues/<%= @issue.id %>/watch">
