@@ -9,15 +9,9 @@ class IssuesController < ApplicationController
     @issues = Issue.all.order(sort_column + ' ' + sort_direction)
     @issues = @issues.where(kind: params[:kind]) if params[:kind]
     @issues = @issues.where(priority: params[:priority]) if params[:priority]
-<<<<<<< HEAD
     @issues = @issues.where(status: params[:status]) if params[:status]
     #@issues = @issues.where(watchers.exists?(@current_user.id)) if params[:watching]
     #@issues = @issues.where(assignee: params[:responsible]) if params[:responsible]
-=======
-    # @issues = @issues.where(status: params[:status]) if params[:status]
-    # @issues = @issues.where(watchers.exists?(@current_user.id)) if params[:watching]
-    # @issues = @issues.where(assignee: params[:responsible]) if params[:responsible]
->>>>>>> 89414c68f4c4c8cb3999ae9cd34be7e53595429a
   end
 
   # GET /issues/1
