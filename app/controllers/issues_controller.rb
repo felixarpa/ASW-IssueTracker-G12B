@@ -33,7 +33,6 @@ class IssuesController < ApplicationController
   def create
     @issue = Issue.new(issue_params)
     @issue.user = current_user
-    @issue.status = 0
     #@issue.user_id = current_user.id
 
     respond_to do |format|
@@ -69,14 +68,6 @@ class IssuesController < ApplicationController
       format.html { redirect_to issues_url, notice: 'Issue was successfully destroyed.' }
       format.json { head :no_content }
     end
-  end
-  
-  def close
-    @issue.status = 1
-  end
-  
-  def open
-    @issue.status = 0
   end
 
   private

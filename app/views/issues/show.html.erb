@@ -93,12 +93,13 @@
         </dl>
         
         <dl>
-          <dt>Status: <% (@issue.status == 0) ? 'open' : 'closed' %></dt>
+          <dt><!--< % (@issue.status == 0) ? 'Status: open' : 'Status: closed' %>--> Status </dt>
           <dd class="status">
             <% if current_user %>
               <a href="/issues/<%= @issue.id %>/toggle">
-                <%= (@issue.status == 0) ? 'Open' : 'Close' %>
+                Toggle
               </a>
+              <!--< %= (@issue.status == 0) ? 'Open' : 'Close' %>-->
             <% end %>
           </dd>
         </dl>
