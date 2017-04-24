@@ -70,8 +70,8 @@
           </td>
           <td class="text">
             <% if issue.votes.size > 0 %>
-              <span class="aui-badge issue-vote-count-<%= issue.votes
-                                .include?(current_user) ? 'unvoted' : 'voted' %>">
+              <span class="aui-badge issue-count-<%= issue.votes
+                                .include?(current_user) ? 'no' : 'yes' %>">
                 <%= issue.votes.size %>
               </span>
             <% end %>
