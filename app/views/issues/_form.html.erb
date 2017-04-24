@@ -1,6 +1,6 @@
-<%= form_for(issue) do |f| %>
+<%= form_for @issue, html: { multipart: true } do |f| %>
   <% if issue.errors.any? %>
-    <div id="error_explanation">
+    <div id="error_explanation" class="errors">
       <p><%= pluralize(issue.errors.count, "error") %> prohibited this issue from being saved:</p>
 
       <ul>
@@ -38,7 +38,17 @@
                              ['Resolved'], ['Closed']]) %>
   </div>
 
+    <div class="field-group">
+      <%= f.label :attachments %>
+      <ul id="attachment-list" class="attachment-list"></ul>
+      <div class="myFile">
+        <button class="aui-button">Select files</button>
+        <%= file_field_tag 'attached_files[]', type: :file, id: 'attachment-upload', class:'assistive', onchange: 'javascript:updateUploads("new")', multiple: true %>
+      </div>
+    </div>
+
   <div class="actions">
     <%= f.submit 'Create issue', :class => 'submit' %>
+    <%= link_to 'Cancel', issues_path, :class => 'cancel' %>
   </div>
 <% end %>
