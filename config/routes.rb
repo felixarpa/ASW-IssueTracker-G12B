@@ -8,7 +8,6 @@ Rails.application.routes.draw do
     member do
       resources :vote, only: :index
       resources :watch, only: :index
-      resources :status
     end
   end
   get 'issues/index' => 'issues#index'

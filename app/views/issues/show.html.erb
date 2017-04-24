@@ -61,6 +61,15 @@
           </dd>
         </dl>
         <dl>
+          <dt>Status</dt>
+          <dd class="status with-icon">
+            <a href="/issues?status=<%= @issue.status %>">
+              <span class="icon-status icon-<%= @issue.status %>"></span>
+              <%= @issue.status %>
+            </a>
+          </dd>
+        </dl>
+        <dl>
           <dt>Votes</dt>
           <dd class="votes">
             <span class="aui-badge issue-count-<%= @issue.votes
@@ -90,19 +99,6 @@
             <% end %>
           </dd>
         </dl>
-        
-        <dl>
-          <dt><!--< % (@issue.status == 0) ? 'Status: open' : 'Status: closed' %>--> Status </dt>
-          <dd class="status">
-            <% if current_user %>
-              <a href="/issues/<%= @issue.id %>/status">
-                Toggle
-              </a>
-              <!--< %= (@issue.status == 0) ? 'Open' : 'Close' %>-->
-            <% end %>
-          </dd>
-        </dl>
-        
       </div>
     </div>
   </div>
