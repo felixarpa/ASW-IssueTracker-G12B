@@ -10,6 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
+ActiveRecord::Schema.define(version: 20170424204211) do
+=======
 ActiveRecord::Schema.define(version: 20170424165557) do
 
   create_table "attached_files", force: :cascade do |t|
@@ -22,13 +25,14 @@ ActiveRecord::Schema.define(version: 20170424165557) do
     t.datetime "file_updated_at"
     t.index ["issue_id"], name: "index_attached_files_on_issue_id"
   end
+>>>>>>> d5c2442065092e2f4be43217955d51d5c6c5844f
 
   create_table "issues", force: :cascade do |t|
     t.string   "title"
     t.string   "description"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-    t.integer  "kind",        default: 0
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
+    t.string   "kind",        default: "/images/issue_types/task.svg"
     t.integer  "user_id"
     t.integer  "priority",    default: 2
     t.integer  "status",      default: 0
@@ -51,11 +55,12 @@ ActiveRecord::Schema.define(version: 20170424165557) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "provider"
     t.string   "uid"
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "provider"
+    t.string   "image_url"
   end
 
 end
