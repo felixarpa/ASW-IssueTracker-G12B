@@ -10,6 +10,8 @@ Rails.application.routes.draw do
       resources :watch, only: :index
     end
   end
+  resources :attached_files, only: :destroy
+
   get 'issues/index' => 'issues#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

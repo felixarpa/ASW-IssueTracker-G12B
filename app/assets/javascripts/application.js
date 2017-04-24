@@ -18,7 +18,7 @@
 updateUploads = function(action) {
     var input = document.getElementById('attachment-upload');
     if (input.files.length > 0 && action === 'new') {
-        var output = document.getElementById('attachment-list');
+        var output = document.getElementById('attached-files-list');
 
         output.innerHTML = '';
         for (var i = 0; i < input.files.length; ++i) {

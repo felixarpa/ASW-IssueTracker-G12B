@@ -46,7 +46,7 @@ class IssuesController < ApplicationController
       if @issue.save
 
         if params[:attached_files]
-          params[:attached_files].each { |attached_file|
+          params[:attached_files].each {|attached_file|
             @issue.attached_files.create(file: attached_file)
           }
         end
@@ -90,10 +90,10 @@ class IssuesController < ApplicationController
     @issue = Issue.find(params[:id])
   end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def issue_params
-      params.require(:issue).permit(:title, :description, :kind, :priority, :status, :attachedfiles)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def issue_params
+    params.require(:issue).permit(:title, :description, :kind, :priority, :attachedfiles)
+  end
 
   def sort_column
     Issue.column_names.include?(params[:sort]) ? params[:sort] : ''
