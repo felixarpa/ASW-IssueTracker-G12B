@@ -74,8 +74,8 @@ class IssuesController < ApplicationController
   def update
     respond_to do |format|
       if @issue.update(issue_params)
-        if params.has_key?(:assignee_id)
-          logger.info "ENTEREEERSRSRDSAFDSFsda776890465789765463657"
+        if issue_params.has_key?(:assignee_id)
+          logger.debug "ENTEREEERSRSRDSAFDSFsda776890465789765463657"
           @issue.assignee = User.find_by(id: @issue.assignee_id)
         end
 
