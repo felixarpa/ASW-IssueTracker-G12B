@@ -27,7 +27,7 @@
         <!--Obtenir els nav links i les forms per fer toggling-->
         <div id = "BarraSuperior-Right">
           <% if current_user %>
-            <div id = "BarraSuperior-Right-SignOut"><%= link_to "Sign Out", 'sign_out', method: :delete %></div>
+            <div id = "BarraSuperior-Right-SignOut"><%= link_to "Sign Out", '/sign_out', method: :delete %></div>
             <div id = "BarraSuperior-Right-Pic"><%= image_tag(@auth['info']['image'], width: 51, height: 51, class: 'img-circle') %></div>
             <div id = "BarraSuperior-Right-LoggedIn">Signed in as: <%= current_user.name %></div>
           <% else %>
