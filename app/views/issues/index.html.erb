@@ -44,10 +44,15 @@
   <p id="issues-filter-criteria">
     <% if request.query_parameters[:kind] %>
       <b>type:</b> "<%= request.query_parameters[:kind] %>"
-    <% elsif request.query_parameters[:priority] %>
+    <% end %>
+    <% if request.query_parameters[:priority] %>
         <b>priority:</b> "<%= request.query_parameters[:priority] %>"
-    <% elsif request.query_parameters[:status] %>
-        <b>status:</b> "<%= request.query_parameters[:status] %>"
+    <% end %>
+    <% if request.query_parameters[:status] %>
+        <b>status:</b> "<%= Issue.statuses[request.query_parameters[:status]] %>"
+    <% end %>
+    <% if request.query_parameters[:responsible] %>
+        <b>assignee:</b> "<%= request.query_parameters[:responsible] %>"
     <% end %>
   </p>
 
@@ -83,8 +88,8 @@
           <td class="text">
             <a href="/issues?status=<%= issue.status %>"
                class="icon-status icon-<%= issue.status %>"
-               title="Filter by status: <%= issue.status %>">
-              <%= issue.status %>
+               title="Filter by status: <%= Issue.statuses[issue.status] %>">
+              <%= Issue.statuses[issue.status] %>
             </a>
           </td>
           <td class="text">

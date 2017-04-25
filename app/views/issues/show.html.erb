@@ -94,7 +94,7 @@
           <dd class="status with-icon">
             <a href="/issues?status=<%= @issue.status %>">
               <span class="icon-status icon-<%= @issue.status %>"></span>
-              <%= @issue.status %>
+              <%= Issue.statuses[@issue.status] %>
             </a>
           </dd>
         </dl>
