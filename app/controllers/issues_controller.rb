@@ -55,7 +55,7 @@ class IssuesController < ApplicationController
   # POST /issues.json
   def create
     @issue = Issue.new(issue_params)
-    @issue.user = User.find_by(id: 2)
+    @issue.user = current_user
     @issue.assignee = User.find_by(id: @issue.assignee_id)
 
     respond_to do |format|
