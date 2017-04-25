@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+    attr_accessor :assignee_id
     has_many :issues
     has_many :assigned_issues, :class_name => "Issue"
     has_many :comments

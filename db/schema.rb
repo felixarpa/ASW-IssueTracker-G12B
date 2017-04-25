@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 20170425093509) do
     t.integer  "user_id"
     t.integer  "priority",    default: 2
     t.string   "status",      default: "New"
+    t.integer  "assignee_id"
   end
 
   create_table "table_votes", force: :cascade do |t|
