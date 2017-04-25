@@ -1,7 +1,7 @@
 class IssuesController < ApplicationController
   helper_method :sort_column, :sort_direction
   before_action :set_auth
-  before_action :set_issue, only: [:show, :edit, :update, :destroy]
+  before_action :set_issue, only: [:show, :edit, :update, :destroy, :attach]
 
   # GET /issues
   # GET /issues.json
@@ -36,6 +36,10 @@ class IssuesController < ApplicationController
   def edit
   end
 
+  # GET /issues/1/attach
+  def attach
+  end
+
   # POST /issues
   # POST /issues.json
   def create
@@ -65,6 +69,13 @@ class IssuesController < ApplicationController
   def update
     respond_to do |format|
       if @issue.update(issue_params)
+
+        if params[:attached_files]
+          params[:attached_files].each {|attached_file|
+            @issue.attached_files.create(file: attached_file)
+          }
+        end
+
         format.html {redirect_to @issue, notice: 'Issue was successfully updated.'}
         format.json {render :show, status: :ok, location: @issue}
       else
@@ -92,7 +103,8 @@ class IssuesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def issue_params
-    params.require(:issue).permit(:title, :description, :kind, :priority, :attachedfiles)
+    params.fetch(:issue, {}).permit(:title, :description, :kind, :priority)
+
   end
 
   def sort_column

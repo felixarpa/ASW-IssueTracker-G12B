@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       resources :watch, only: :create
     end
   end
+  get 'issues/:id/attach', to: 'issues#attach', as: :attach_to_issue
   resources :attached_files, only: :destroy
 
   get 'issues/index' => 'issues#index'

@@ -1,0 +1,19 @@
+<div class="header">
+  <div class="section-title">
+    <h1>Issues</h1>
+  </div>
+  <div class="page-actions"></div>
+</div>
+
+<div class="issue-main-view">
+  <div class="issue-header">
+    <span class="issue-id">
+      Issue #<%= @issue.id %>
+    </span>
+  </div>
+  <h2>Attach files</h2>
+
+  <%= render 'form_attach', issue: @issue %>
+
+  <%= link_to 'Back', issues_path, :class => 'back' %>
+</div>

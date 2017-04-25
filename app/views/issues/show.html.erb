@@ -9,15 +9,21 @@
 
 <div class="issue-main-view">
   <div class="issue-header">
-      <span class="issue-id">
-        Issue #<%= @issue.id %>
-      </span>
+    <span class="issue-id">
+      Issue #<%= @issue.id %>
+    </span>
+    <div class="issue-toolbar">
+      <% if current_user %>
+        <a href="/issues/<%= @issue.id %>/attach" class="aui-button">Attach</a>
+        <a href="/issues/<%= @issue.id %>/edit" class="aui-button">Edit</a>
+        <%= link_to 'Delete', @issue,  method: :delete, class: 'aui-button', data: { confirm: 'Are you sure you want to delete this issue?' } %>
+      <% end %>
+    </div>
   </div>
 
   <div class="issue-main-content">
     <div class="issue-info">
       <div class="issues-toolbar">
-        <div class="aui-buttons"><%= link_to "Delete", @issue.id, method: :delete %></div>
       </div>
 
       <h1 id="issue-title"><%= @issue.title %></h1>
