@@ -15,9 +15,9 @@
 //= require turbolinks
 //= require_tree .
 
-updateUploads = function(action) {
+updateUploads = function() {
     var input = document.getElementById('attachment-upload');
-    if (input.files.length > 0 && action === 'new') {
+    if (input.files.length > 0) {
         var output = document.getElementById('attached-files-list');
 
         output.innerHTML = '';

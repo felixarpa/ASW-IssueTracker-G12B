@@ -10,7 +10,7 @@
       <ul id="attached-files-list" class="attached-files-list newfiles"></ul>
       <div class="myFile">
         <button class="aui-button">Select files</button>
-        <%= file_field_tag 'attached_files[]', type: :file, id: 'attachment-upload', class:'assistive', onchange: 'javascript:updateUploads("new")', multiple: true %>
+        <%= file_field_tag 'attached_files[]', type: :file, id: 'attachment-upload', class:'assistive', onchange: 'javascript:updateUploads()', multiple: true %>
       </div>
     </div>
 
