@@ -9,17 +9,27 @@ class IssuesController < ApplicationController
     @issues = Issue.all.order(sort_column + ' ' + sort_direction)
     @issues = @issues.where(kind: params[:kind]) if params[:kind]
     @issues = @issues.where(priority: params[:priority]) if params[:priority]
-    if params[:watching]
-      @issues_aux = @issues
-      for issue in @issues do
-        if issue.watchers.exists?(User.find_by(nickname: params[:watching]).id)
-          @issue_aux << issue
-        end
-      end
-      @issues = @issues_aux
-    end
     @issues = @issues.where(status: params[:status]) if params[:status]
-    @issues = @issues.where(assignee: User.find_by(nickname: params[:responsible])) if params[:responsible]
+
+    if params[:watching]
+      @user = User.find_by(nickname: params[:watching])
+      @issues = @issues.to_a
+      if @user
+        @issues.select { |i| i.watchers.exists?(@user.id) }
+      else
+        @issues.clear
+      end
+    end
+
+    if params[:responsible]
+      @user = User.find_by(nickname: params[:responsible])
+      @issues = @issues.to_a
+      if @user
+        @issues.select { |i| i.assignee.id.equal?(@user.id) }
+      else
+        @issues.clear
+      end
+    end
   end
 
   # GET /issues/1
