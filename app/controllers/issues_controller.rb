@@ -12,14 +12,14 @@ class IssuesController < ApplicationController
     if params[:watching]
       @issues_aux = @issues
       for issue in @issues do
-        if issue.watchers.exists?(User.find_by(name: params[:watching]).id)
+        if issue.watchers.exists?(User.find_by(nickname: params[:watching]).id)
           @issue_aux << issue
         end
       end
       @issues = @issues_aux
     end
     @issues = @issues.where(status: params[:status]) if params[:status]
-    @issues = @issues.where(assignee: params[:responsible]) if params[:responsible]
+    @issues = @issues.where(assignee: User.find_by(nickname: params[:responsible])) if params[:responsible]
   end
 
   # GET /issues/1
