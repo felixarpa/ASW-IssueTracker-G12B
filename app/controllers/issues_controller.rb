@@ -74,7 +74,7 @@ class IssuesController < ApplicationController
   def update
     respond_to do |format|
       if @issue.update(issue_params)
-        if @issue.assignee
+        if @issue.assignee_id
           @issue.assignee = User.find_by(id: @issue.assignee_id)
         end
 

@@ -6,7 +6,7 @@ class Issue < ApplicationRecord
                  closed: 'Closed' }
   belongs_to :user
   has_many :comments
-  has_one :assignee, class_name: 'User'
+  belongs_to :assignee, class_name: 'User', optional: true
   has_and_belongs_to_many :votes, join_table: 'table_votes', class_name: 'User'
   has_and_belongs_to_many :watchers, join_table: 'table_watchers', class_name: 'User'
   has_many :attached_files, :dependent => :destroy
