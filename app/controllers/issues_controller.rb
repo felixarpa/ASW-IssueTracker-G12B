@@ -50,7 +50,6 @@ class IssuesController < ApplicationController
   def create
     @issue = Issue.new(issue_params)
     @issue.user = current_user
-    @issue.assignee = User.find_by(id: @issue.assignee_id)
     respond_to do |format|
       if @issue.save
 
@@ -74,9 +73,6 @@ class IssuesController < ApplicationController
   def update
     respond_to do |format|
       if @issue.update(issue_params)
-        if @issue.assignee_id
-          @issue.assignee = User.find_by(id: @issue.assignee_id)
-        end
 
         if params[:attached_files]
           params[:attached_files].each {|attached_file|
