@@ -63,6 +63,7 @@
     <%= sortable "priority", "P" %>
     <%= sortable "status", "S" %>
     <%= sortable "votes", "Votes" %>
+    <%= sortable "assignee_id", "Assignee" %>
     <%= sortable "created_at", "Created" %>
     <%= sortable "updated_at", "Updated" %>
     </thead>
@@ -98,6 +99,14 @@
                                 .include?(current_user) ? 'no' : 'yes' %>">
                 <%= issue.votes.size %>
               </span>
+            <% end %>
+          </td>
+          <td class="text">
+            <% if issue.assignee_id %>
+                <a href="/issues?responsible=<%= issue.assignee.nickname %>">
+                  <img class="assignee-icon" src=<%= issue.assignee.image_url %>
+                      <span title="author-name"><%= issue.assignee.name %></span>
+                </a>
             <% end %>
           </td>
           <td class="date">

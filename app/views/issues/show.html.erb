@@ -23,6 +23,7 @@
 
   <div class="issue-main-content">
     <div class="issue-info">
+
       <div class="issues-toolbar">
       </div>
 
@@ -99,6 +100,17 @@
             </a>
           </dd>
         </dl>
+        <% if @issue.assignee %>
+        <dl>
+          <dt>Assigned to</dt>
+          <dd>
+            <a href="/issues?responsible=<%= @issue.assignee.nickname %>">
+                <img class="assignee-icon" src=<%= @issue.assignee.image_url %>
+              <span title="author-name"><%= @issue.assignee.name %></span>
+            </a>
+          </dd>
+        </dl>
+        <% end %>
         <dl>
           <dt>Votes</dt>
           <dd class="votes">

@@ -23,7 +23,8 @@
 
   <div class="field-group">
     <%= f.label :assignee %>
-    <%= f.collection_select(:assignee_id, User.all, :id, :name) %>
+    <%= select('issue', 'assignee_id', User.all.collect {|mt| [ mt.name, mt.id ] }, {:include_blank => ''})
+        %>
   </div>
 
   <div class="field-group">
