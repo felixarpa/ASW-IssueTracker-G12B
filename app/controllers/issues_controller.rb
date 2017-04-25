@@ -3,8 +3,6 @@ class IssuesController < ApplicationController
   before_action :set_auth
   before_action :set_issue, only: [:show, :edit, :update, :destroy, :attach]
 
-  attr_accessor :assignee
-
   # GET /issues
   # GET /issues.json
   def index
@@ -13,15 +11,8 @@ class IssuesController < ApplicationController
     @issues = @issues.where(priority: params[:priority]) if params[:priority]
     @issues = @issues.where(status: params[:status]) if params[:status]
 
-    if params[:responsible]
-      @user = User.find_by(nickname: params[:responsible])
-      @issues = @issues.to_a
-      if @user.nil?
-        @issues.clear
-      else
-        @issues = @issues.select { |i| i.assignee.equal?(@user) }
-      end
-    end
+    @issues = @issues.where(assignee_id: User.find_by(nickname:
+                              params[:responsible]).id) if params[:responsible]
 
     if params[:watching]
       @user = User.find_by(nickname: params[:watching])
