@@ -22,6 +22,11 @@
   </div>
 
   <div class="field-group">
+    <%= f.label :assignee %>
+    <%= f.collection_select(:assignee_id, User.all, :id, :name) %>
+  </div>
+
+  <div class="field-group">
     <%= f.label :kind %>
     <%= f.select(:kind, [['bug'], ['enhancement'], ['proposal'], ['task']]) %>
   </div>
@@ -44,14 +49,21 @@
 
     <div class="field-group">
       <%= f.label :attachments %>
-      <ul id="attached-files-list" class="attached-files-list"></ul>
+      <ul id="existing-attached-files-list" class="attached-files-list">
+        <% @issue.attached_files.each do |attachment| %>
+
+      </ul>
+      <ul id="attached-files-list" class="attached-files-list" >
+        <li><a href="<%= attachment.file.url %>"><%= attachment.file_file_name %></a></li>
+        <% end %>
+      </ul>
       <div class="myFile">
         <button class="aui-button">Select files</button>
         <%= file_field_tag 'attached_files[]', type: :file, id: 'attachment-upload', class:'assistive', onchange: 'javascript:updateUploads("new")', multiple: true %>
       </div>
     </div>
 
-  <div class="actions">
+    <div class="actions">
     <%= f.submit 'Create issue', :class => 'submit' %>
     <%= link_to 'Cancel', issues_path, :class => 'cancel' %>
   </div>

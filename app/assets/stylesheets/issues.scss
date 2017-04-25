@@ -458,6 +458,7 @@ h2 {
 }
 
 .myFile {
+  margin-top: 10px;
   width: 90px;
   height: 30px;
   overflow: hidden;
@@ -489,7 +490,6 @@ h2 {
   max-width: 600px;
   list-style-type: disc;
     li:last-child {
-      margin-bottom: 10px;
       border-bottom: 1px solid #ccc;
     }
     li {
@@ -541,20 +541,19 @@ h2 {
     display: list-item;
     text-align: -webkit-match-parent;
   }
+}
 
-  .delete-attachment {
-    color: #707070;
-    font-weight: 800;
-    height: 16px;
-    position: absolute;
-    right: -12px;
-    top: -8px;
-    width: 16px;
-  }
-  .delete-attachment:hover {
-    color: #333;
-    text-decoration: none;
-  }
+.delete-attachment {
+  height: 24px;
+  position: absolute;
+  right: -12px;
+  top: -8px;
+  width: 24px;
+  background: #fff;
+  border-radius: 12px;
+}
+.delete-attachment:hover {
+  text-decoration: none;
 }
 
 .attachments {
@@ -566,4 +565,19 @@ h2 {
   float: right;
   margin-right: 20px;
   margin-bottom: 10px;
+}
+
+.delete-icon {
+  height: 100%;
+  width: 100%;
+  opacity: 0.6;
+}
+
+.delete-icon:hover {
+  opacity: 1;
+}
+
+.attached-files-list .delete-attachment {
+  right: 5px;
+  top: 3px;
 }

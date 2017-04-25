@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170425010236) do
+ActiveRecord::Schema.define(version: 20170425101014) do
 
   create_table "attached_files", force: :cascade do |t|
     t.integer  "issue_id"
@@ -23,12 +23,26 @@ ActiveRecord::Schema.define(version: 20170425010236) do
     t.index ["issue_id"], name: "index_attached_files_on_issue_id"
   end
 
+  create_table "comments", force: :cascade do |t|
+    t.string   "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "issue_id"
+    t.integer  "user_id"
+  end
+
   create_table "issues", force: :cascade do |t|
     t.string   "title"
     t.string   "description"
+<<<<<<< HEAD
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
+    t.string   "kind",        default: "/images/issue_types/task.svg"
+=======
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
     t.integer  "kind",        default: 0
+>>>>>>> 3263bc3510f61bfbbf468b0f6970a4c8bf9b219f
     t.integer  "user_id"
     t.integer  "priority",    default: 2
     t.string   "status",      default: "New"
@@ -51,11 +65,11 @@ ActiveRecord::Schema.define(version: 20170425010236) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "provider"
     t.string   "uid"
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "provider"
     t.string   "image_url"
     t.string   "nickname"
     t.integer  "issue_id"
