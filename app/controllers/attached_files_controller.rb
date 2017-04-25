@@ -6,7 +6,11 @@ class AttachedFilesController < ApplicationController
     if @attached_file
       @attached_file.destroy
     end
-    redirect_to "/issues/#{ @issue.id }"
+    if params[:page] == 'edit'
+      redirect_to "/issues/#{ @issue.id }/edit"
+    else
+      redirect_to "/issues/#{ @issue.id }"
+    end
   end
 
   private
