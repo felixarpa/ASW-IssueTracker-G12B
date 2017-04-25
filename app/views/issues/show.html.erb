@@ -134,6 +134,8 @@
     <% @comments.each do |comment| %>
     <%= render partial: 'comments/comment', locals: {comment: comment} %>
     <% end %>
+
+    <%= render partial: 'comments/new' %>
     
   </div>
 </div>
