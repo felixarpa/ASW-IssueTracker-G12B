@@ -39,7 +39,7 @@
     </div>
   </div>
 
-  <h2>Issues (<%= @issues.size %>)</h2>
+  <h2>Issues (<%= @issues.to_a.size %>)</h2>
 
   <p id="issues-filter-criteria">
     <% if request.query_parameters[:kind] %>

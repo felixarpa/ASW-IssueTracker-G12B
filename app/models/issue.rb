@@ -13,4 +13,6 @@ class Issue < ApplicationRecord
   validates :kind, presence: true
   validates :title, presence: true
   validates :priority, presence: true
+
+  attr_reader :assignee
 end
