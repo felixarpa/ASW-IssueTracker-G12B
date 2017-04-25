@@ -1,7 +1,7 @@
 class WatchController < ApplicationController
   before_action :set_issue
 
-  def index
+  def create
     if @issue.watchers.exists?(current_user.id)
       @issue.watchers.delete(current_user)
     else

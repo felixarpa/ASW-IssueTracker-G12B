@@ -23,7 +23,7 @@
       <h1 id="issue-title"><%= @issue.title %></h1>
 
       <div class="issue-author">
-        <a href="/issues?responsible=<%= @issue.user.name %>">
+        <a href="/issues?responsible=<%= @issue.user.nickname %>">
           <div class="aui-avatar aui-avatar-medium">
             <div class="aui-avatar-inner">
               <img src=<%= @issue.user.image_url %>>
@@ -100,7 +100,7 @@
               <%= @issue.votes.size %>
             </span>
             <% if current_user %>
-              <a href="/issues/<%= @issue.id %>/vote">
+              <a href="/issues/<%= @issue.id %>/vote" data-method="create">
                 <%= (@issue.votes.exists?(current_user.id)) ? 'Remove vote' :
                         'Vote for this issue' %>
               </a>
@@ -115,7 +115,7 @@
               <%= @issue.watchers.size %>
             </span>
             <% if current_user %>
-                <a href="/issues/<%= @issue.id %>/watch">
+                <a href="/issues/<%= @issue.id %>/watch" data-method="create">
                   <%= (@issue.watchers.exists?(current_user.id)) ? 'Stop watching' :
                           'Watch this issue' %>
                 </a>

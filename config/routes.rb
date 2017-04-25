@@ -6,8 +6,8 @@ Rails.application.routes.draw do
   delete 'delete_issue', to: "issues#destroy", as: 'delete_issue'
   resources :issues do
     member do
-      resources :vote, only: :index
-      resources :watch, only: :index
+      resources :vote, only: :create
+      resources :watch, only: :create
     end
   end
   resources :attached_files, only: :destroy
