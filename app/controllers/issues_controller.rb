@@ -35,7 +35,7 @@ class IssuesController < ApplicationController
   # GET /issues/1
   # GET /issues/1.json
   def show
-    @comment = @issue.comments
+    @comments = @issue.comments
   end
 
   # GET /issues/new
@@ -56,6 +56,7 @@ class IssuesController < ApplicationController
   def create
     @issue = Issue.new(issue_params)
     @issue.user = current_user
+    @issue.assignee = User.find_by(id: @issue.assignee_id)
 
     respond_to do |format|
       if @issue.save
@@ -66,7 +67,7 @@ class IssuesController < ApplicationController
           }
         end
 
-        format.html {redirect_to @issue, notice: 'Issue was successfully created.'}
+        format.html {redirect_to @issue, notice: 'Issue was successfully updated.'}
         format.json {render :show, status: :created, location: @issue}
       else
         format.html {render :new}
@@ -114,8 +115,7 @@ class IssuesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def issue_params
-    params.fetch(:issue, {}).permit(:title, :description, :kind, :priority)
-
+    params.fetch(:issue, {}).permit(:title, :description, :kind, :priority, :status, :assignee_id)
   end
 
   def sort_column

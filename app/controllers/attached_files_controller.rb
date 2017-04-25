@@ -6,7 +6,10 @@ class AttachedFilesController < ApplicationController
     if @attached_file
       @attached_file.destroy
     end
-    if params[:page] == 'edit'
+
+    logger.debug(params[:page].to_s)
+    logger.debug("The URL" + request.path)
+    if request.path == '/issues/' + @issue.id.to_s + '/edit'
       redirect_to "/issues/#{ @issue.id }/edit"
     else
       redirect_to "/issues/#{ @issue.id }"
