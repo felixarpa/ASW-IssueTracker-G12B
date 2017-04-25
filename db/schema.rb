@@ -32,13 +32,12 @@ ActiveRecord::Schema.define(version: 20170425010236) do
   create_table "issues", force: :cascade do |t|
     t.string   "title"
     t.string   "description"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-    t.integer  "kind",        default: 0
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
+    t.string   "kind",        default: "/images/issue_types/task.svg"
     t.integer  "user_id"
     t.integer  "priority",    default: 2
     t.string   "status",      default: "New"
-    t.integer  "assignee_id"
   end
 
   create_table "table_votes", force: :cascade do |t|
@@ -58,11 +57,11 @@ ActiveRecord::Schema.define(version: 20170425010236) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "provider"
     t.string   "uid"
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "provider"
     t.string   "image_url"
     t.string   "nickname"
     t.integer  "issue_id"
