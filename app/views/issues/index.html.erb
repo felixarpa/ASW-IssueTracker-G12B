@@ -29,10 +29,10 @@
         </li>
         <% if current_user %>
           <li id="mine" class="aui-button">
-            <a href="/issues?responsible=<%= current_user.name %>">My issues</a>
+            <a href="/issues?responsible=<%= current_user.nickname %>">My issues</a>
           </li>
           <li id="watching" class="aui-button">
-            <a href="/issues?watching=<%= current_user.name %>">Watching</a>
+            <a href="/issues?watching=<%= current_user.nickname %>">Watching</a>
           </li>
         <% end %>
       </ul>

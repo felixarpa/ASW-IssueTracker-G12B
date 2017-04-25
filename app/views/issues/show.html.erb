@@ -9,19 +9,34 @@
 
 <div class="issue-main-view">
   <div class="issue-header">
-      <span class="issue-id">
-        Issue #<%= @issue.id %>
-      </span>
+    <span class="issue-id">
+      Issue #<%= @issue.id %>
+    </span>
+    <div class="issue-toolbar">
+      <% if current_user %>
+        <a href="/issues/<%= @issue.id %>/attach" class="aui-button">Attach</a>
+        <a href="/issues/<%= @issue.id %>/edit" class="aui-button">Edit</a>
+        <%= link_to 'Delete', @issue,  method: :delete, class: 'aui-button', data: { confirm: 'Are you sure you want to delete this issue?' } %>
+      <% end %>
+    </div>
   </div>
 
   <div class="issue-main-content">
     <div class="issue-info">
-      <div class="issues-toolbar"></div>
+      <div class="issues-toolbar">
+      </div>
 
       <h1 id="issue-title"><%= @issue.title %></h1>
 
       <div class="issue-author">
-        <span title="author-name"><%= @issue.user.name %></span>
+        <a href="/issues?responsible=<%= @issue.user.nickname %>">
+          <div class="aui-avatar aui-avatar-medium">
+            <div class="aui-avatar-inner">
+              <img src=<%= @issue.user.image_url %>>
+            </div>
+          </div>
+          <span title="author-name"><%= @issue.user.name %></span>
+        </a>
         created an issue
         <time class="created_at"><%= @issue.created_at.strftime('%Y-%m-%d')
         %></time>
@@ -38,10 +53,15 @@
       <div class="attachments">
         <ul class="issue-attachment-list attachment-list clearfix">
           <% @issue.attached_files.each do |attached_file| %>
-              <li><a class="attachment-link" target="_blank" href="<%= attached_file.file.url %>">
-                <span class="placeholder default"></span>
-                <span class="filename"><%= attached_file.file_file_name %></span>
-              </a></li>
+              <li>
+                <a class="attachment-link" target="_blank" href="<%= attached_file.file.url %>">
+                  <span class="placeholder default"></span>
+                  <span class="filename"><%= attached_file.file_file_name %></span>
+                </a>
+                <% if current_user %>
+                  <%= link_to 'X', attached_file,  method: :delete, class: 'delete-attachment', data: { confirm: 'Are you sure you want to delete this attachment?' } %>
+                <% end %>
+              </li>
           <% end %>
         </ul>
       </div>
@@ -86,7 +106,7 @@
               <%= @issue.votes.size %>
             </span>
             <% if current_user %>
-              <a href="/issues/<%= @issue.id %>/vote">
+              <a href="/issues/<%= @issue.id %>/vote" data-method="create">
                 <%= (@issue.votes.exists?(current_user.id)) ? 'Remove vote' :
                         'Vote for this issue' %>
               </a>
@@ -101,7 +121,7 @@
               <%= @issue.watchers.size %>
             </span>
             <% if current_user %>
-                <a href="/issues/<%= @issue.id %>/watch">
+                <a href="/issues/<%= @issue.id %>/watch" data-method="create">
                   <%= (@issue.watchers.exists?(current_user.id)) ? 'Stop watching' :
                           'Watch this issue' %>
                 </a>

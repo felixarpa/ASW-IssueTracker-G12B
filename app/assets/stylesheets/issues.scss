@@ -255,11 +255,36 @@ h2 {
     }
 
     .issue-author {
+      position: relative;
+      height: 20px;
+      display: inline;
+      padding-left: 42px;
 
-      span {
-        font-weight: bold;
-        float: left;
-        margin-right: 5px;
+      a {
+        font-weight: 700;
+
+        .aui-avatar-medium {
+          position: absolute;
+          top: 3px;
+          left: 0;
+
+          .aui-avatar-inner {
+            height: 32px;
+            width: 32px;
+            display: table-cell;
+            vertical-align: middle;
+          }
+
+          img {
+            max-height: 32px;
+            max-width: 32px;
+          }
+        }
+
+        span {
+          font-weight: bold;
+          margin-right: 5px;
+        }
       }
 
       .created_at {
@@ -269,7 +294,7 @@ h2 {
     }
 
     .issue-description {
-      margin-top: 10px;
+      margin-top: 5px;
       font-size: 14px;
       padding-left: 42px;
 
@@ -332,6 +357,17 @@ h2 {
       }
     }
   }
+}
+
+.aui-avatar-medium {
+  height: 32px;
+  width: 32px;
+}
+
+.aui-avatar {
+  box-sizing: border-box;
+  display: inline-block;
+  vertical-align: text-bottom;
 }
 
 .icon-kind {
@@ -506,9 +542,28 @@ h2 {
     text-align: -webkit-match-parent;
   }
 
+  .delete-attachment {
+    color: #707070;
+    font-weight: 800;
+    height: 16px;
+    position: absolute;
+    right: -12px;
+    top: -8px;
+    width: 16px;
+  }
+  .delete-attachment:hover {
+    color: #333;
+    text-decoration: none;
+  }
 }
 
 .attachments {
   margin: 13px 0 0;
   padding-left: 42px;
+}
+
+.issue-toolbar {
+  float: right;
+  margin-right: 20px;
+  margin-bottom: 10px;
 }

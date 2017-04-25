@@ -1,7 +1,7 @@
 class VoteController < ApplicationController
   before_action :set_issue
 
-  def index
+  def create
     if @issue.votes.exists?(current_user.id)
       @issue.votes.delete(current_user)
     else
