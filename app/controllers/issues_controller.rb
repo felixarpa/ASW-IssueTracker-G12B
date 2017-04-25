@@ -74,7 +74,9 @@ class IssuesController < ApplicationController
   def update
     respond_to do |format|
       if @issue.update(issue_params)
-        @issue.assignee = User.find_by(id: @issue.assignee_id)
+        if params[:assignee_id]
+          @issue.assignee = User.find_by(id: @issue.assignee_id)
+        end
 
         if params[:attached_files]
           params[:attached_files].each {|attached_file|
