@@ -24,12 +24,19 @@ class IssuesController < ApplicationController
       end
     end
 
+    if params[:sort] and params[:direction]
+      @issues.order(params[:sort] + ' ' + params[:direction])
+    end
   end
 
   # GET /issues/1
   # GET /issues/1.json
   def show
     @comments = @issue.comments
+    respond_to do |format|
+      format.html
+      format.json { render json: @issue, status: :ok }
+    end
   end
 
   # GET /issues/new

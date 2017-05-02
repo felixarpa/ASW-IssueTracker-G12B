@@ -14,4 +14,13 @@ class Issue < ApplicationRecord
   validates :kind, presence: true
   validates :title, presence: true
   validates :priority, presence: true
+
+  def as_json(options = nil)
+    super(options.reverse_merge(except: []))
+        .merge(_links: {
+            user: {
+                href: "/users/#{self.user_id}"
+            }
+        })
+  end
 end
