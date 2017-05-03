@@ -32,10 +32,16 @@ class IssuesController < ApplicationController
   # GET /issues/1
   # GET /issues/1.json
   def show
-    @comments = @issue.comments
+    @comments = @issue.comments if @issue
     respond_to do |format|
       format.html
-      format.json { render json: @issue, status: :ok }
+      if @issue
+        format.json { render json: { issue: @issue }, status: :ok }
+      else
+        format.json { render json: { error:
+                                         { message: 'Issue does not exist' }
+        }, status: :not_found }
+      end
     end
   end
 
@@ -109,7 +115,7 @@ class IssuesController < ApplicationController
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_issue
-    @issue = Issue.find(params[:id])
+    @issue = Issue.find_by(id: params[:id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
