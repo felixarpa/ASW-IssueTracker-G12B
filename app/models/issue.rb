@@ -17,6 +17,7 @@ class Issue < ApplicationRecord
 
   def as_json(options = nil)
     super(options.reverse_merge(except: []))
+        .merge(votes: self.votes.size)
         .merge(_links: {
             user: {
                 href: "/users/#{self.user_id}"
