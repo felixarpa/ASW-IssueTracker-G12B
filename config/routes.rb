@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :comments
   root 'issues#index'
   get 'home/profile' => 'home#profile'
   get 'auth/:provider/callback', to: "sessions#create"
@@ -9,6 +8,7 @@ Rails.application.routes.draw do
     member do
       resources :vote, only: :create
       resources :watch, only: :create
+      resources :comments, except: [:edit, :new], param: :comment_id
     end
   end
   get 'issues/:id/attach', to: 'issues#attach', as: :attach_to_issue
