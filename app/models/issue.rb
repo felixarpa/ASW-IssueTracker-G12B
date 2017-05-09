@@ -40,12 +40,12 @@ class Issue < ApplicationRecord
                 image: { href: self.assignee.image_url }
             })
     end
-    #if current_user
+    if current_user
       links = links.merge(
                        vote: { href: "/issues/#{self.id}/vote" },
                        watch: { href: "/issues/#{self.id}/watch" }
       )
-    #end
+    end
     response.merge(_links: links)
   end
 end
