@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170425101014) do
+ActiveRecord::Schema.define(version: 20170509151758) do
 
   create_table "attached_files", force: :cascade do |t|
     t.integer  "issue_id"
@@ -68,6 +68,8 @@ ActiveRecord::Schema.define(version: 20170425101014) do
     t.string   "image_url"
     t.string   "nickname"
     t.integer  "issue_id"
+    t.string   "api_key"
+    t.index ["api_key"], name: "index_users_on_api_key", unique: true
   end
 
 end

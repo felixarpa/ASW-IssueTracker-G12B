@@ -1,7 +1,7 @@
 class IssuesController < ApplicationController
   helper_method :sort_column, :sort_direction
-  before_action :set_auth
   before_action :set_issue, only: [:show, :edit, :update, :destroy, :attach]
+  skip_before_action :authenticate_request, only: [:index, :show]
 
   # GET /issues
   # GET /issues.json
@@ -36,7 +36,7 @@ class IssuesController < ApplicationController
     respond_to do |format|
       format.html
       if @issue
-        format.json { render json: { issue: @issue }, status: :ok }
+        format.json { render json: @issue, status: :ok }
       else
         format.json { render json: { error:
                                          { message: 'Issue does not exist' }
@@ -54,7 +54,7 @@ class IssuesController < ApplicationController
   def edit
   end
 
-  # GET /issues/1/attach
+  # POST /issues/1/attach
   def attach
   end
 
@@ -73,7 +73,7 @@ class IssuesController < ApplicationController
         end
 
         format.html {redirect_to @issue, notice: 'Issue was successfully updated.'}
-        format.json {render :show, status: :created, location: @issue}
+        format.json {render json: @issue, status: :created}
       else
         format.html {render :new}
         format.json {render json: @issue.errors, status: :unprocessable_entity}
@@ -129,9 +129,5 @@ class IssuesController < ApplicationController
 
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : ''
-  end
-
-  def set_auth
-    @auth = session[:omniauth] if session[:omniauth]
   end
 end
