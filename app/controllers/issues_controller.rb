@@ -138,6 +138,7 @@ class IssuesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_issue
     @issue = Issue.find_by(id: params[:id])
+    render json: { message: 'Issue not found' }, status: :not_found if @issue.nil?
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

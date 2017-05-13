@@ -40,5 +40,6 @@ class VoteController < ApplicationController
 
   def set_issue
     @issue = Issue.find_by(id: params[:id])
+    render json: { message: 'Issue not found' }, status: :not_found if @issue.nil?
   end
 end
