@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   has_many :issues
-  has_many :assigned_issues, :class_name => "Issue"
+  has_many :assigned_issues, class_name: 'Issue'
 
   # Comments
   has_many :comments
@@ -18,5 +18,14 @@ class User < ApplicationRecord
           image_url: auth['info']['image'],
           nickname: auth['info']['nickname']
       )
+  end
+
+  def as_json_summary
+    {
+        href: "/users/#{self.id}",
+        name: self.name,
+        nickname: self.nickname,
+        image: { href: self.image_url }
+    }
   end
 end

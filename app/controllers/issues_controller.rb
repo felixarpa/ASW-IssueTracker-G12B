@@ -27,6 +27,8 @@ class IssuesController < ApplicationController
     if params[:sort] and params[:direction]
       @issues.order(params[:sort] + ' ' + params[:direction])
     end
+
+    render json: @issues, status: :ok, each_serializer: IndexIssueSerializer
   end
 
   # GET /issues/1
@@ -36,7 +38,8 @@ class IssuesController < ApplicationController
     respond_to do |format|
       format.html
       if @issue
-        format.json { render json: { issue: @issue }, status: :ok }
+        format.json { render json: @issue, status: :ok,
+                             serializer: ShowIssueSerializer }
       else
         format.json { render json: { error:
                                          { message: 'Issue does not exist' }
