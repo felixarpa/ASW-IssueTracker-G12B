@@ -2,6 +2,8 @@ class User < ApplicationRecord
   has_many :issues
   has_many :assigned_issues, class_name: 'Issue'
 
+  has_secure_token :api_key
+
   # Comments
   has_many :comments
   has_many :commented_issues, through: :comments, source: :issue

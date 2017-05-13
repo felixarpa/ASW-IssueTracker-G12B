@@ -62,5 +62,6 @@ gem 'omniauth-twitter', '~>1.1.0'
 
 gem 'paperclip'
 gem 'aws-sdk', '~> 2.3'
-
 gem 'active_model_serializers'
+gem 'simple_command'
+gem 'rack-cors'

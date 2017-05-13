@@ -13,39 +13,37 @@
 
   <div class="field-group">
     <%= f.label :title %>
-    <%= f.text_field :title %>
+    <%= f.text_field :title, name: 'title' %>
   </div>
 
   <div class="field-group">
     <%= f.label :description %>
-    <%= f.text_area :description %>
+    <%= f.text_area :description, name: 'description' %>
   </div>
 
   <div class="field-group">
     <%= f.label :assignee %>
-    <%= select('issue', 'assignee_id', User.all.collect {|mt| [ mt.name, mt.id ] }, {:include_blank => ''})
-        %>
+    <%= f.select :assignee_id, User.all.collect {|mt| [ mt.name, mt.id ] }, {:include_blank => ''}, name: 'assignee_id' %>
   </div>
 
   <div class="field-group">
     <%= f.label :kind %>
-    <%= f.select(:kind, [['bug'], ['enhancement'], ['proposal'], ['task']]) %>
+    <%= f.select :kind, [['bug'], ['enhancement'], ['proposal'], ['task']], {}, name: 'kind' %>
   </div>
 
   <div class="field-group">
     <%= f.label :priority %>
-    <%= f.select(:priority, [['trivial'], ['minor'], ['major'], ['critical'],
-                             ['blocker']]) %>
+    <%= f.select :priority, [['trivial'], ['minor'], ['major'], ['critical'], ['blocker']], {}, name: 'priority' %>
   </div>
   
   <div class="field-group">
     <%= f.label :status %>
-    <%= f.select(:status, [['New', 'new_issue'],
+    <%= f.select :status, [['New', 'new_issue'],
                            ['Open', 'open'],
                            ['On hold', 'on_hold'],
                            ['Invalid', 'invalid_issue'],
                            ['Resolved', 'resolved'],
-                           ['Closed', 'closed']]) %>
+                           ['Closed', 'closed']], {}, name: 'status' %>
   </div>
 
     <div class="field-group">

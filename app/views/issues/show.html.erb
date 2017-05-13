@@ -15,8 +15,10 @@
     <div class="issue-toolbar">
       <% if current_user %>
           <a href="/issues/<%= @issue.id %>/attach" class="aui-button">Attach</a>
-          <a href="/issues/<%= @issue.id %>/edit" class="aui-button">Edit</a>
-          <%= link_to 'Delete', @issue,  method: :delete, class: 'aui-button', data: { confirm: 'Are you sure you want to delete this issue?' } %>
+
+            <a href="/issues/<%= @issue.id %>/edit" class="aui-button">Edit</a>
+            <%= link_to 'Delete', @issue,  method: :delete, class: 'aui-button', data: { confirm: 'Are you sure you want to delete this issue?' } %>
+
       <% end %>
     </div>
   </div>

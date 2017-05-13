@@ -1,7 +1,7 @@
 class IssuesController < ApplicationController
   helper_method :sort_column, :sort_direction
-  before_action :set_auth
   before_action :set_issue, only: [:show, :edit, :update, :destroy, :attach]
+  skip_before_action :authenticate_request, only: [:index, :show]
 
   # GET /issues
   # GET /issues.json
@@ -57,7 +57,7 @@ class IssuesController < ApplicationController
   def edit
   end
 
-  # GET /issues/1/attach
+  # POST /issues/1/attach
   def attach
   end
 
@@ -76,7 +76,7 @@ class IssuesController < ApplicationController
         end
 
         format.html {redirect_to @issue, notice: 'Issue was successfully updated.'}
-        format.json {render :show, status: :created, location: @issue}
+        format.json {render json: @issue, status: :created}
       else
         format.html {render :new}
         format.json {render json: @issue.errors, status: :unprocessable_entity}
@@ -87,14 +87,16 @@ class IssuesController < ApplicationController
   # PATCH/PUT /issues/1
   # PATCH/PUT /issues/1.json
   def update
+    if params[:attached_files]
+      params[:attached_files].each {|attached_file|
+        @issue.attached_files.create(file: attached_file)
+      }
+    end
+    if @issue.user != current_user && !issue_params.empty?
+      return render json: { error: 'Operation not permitted'}, status: 403
+    end
     respond_to do |format|
       if @issue.update(issue_params)
-
-        if params[:attached_files]
-          params[:attached_files].each {|attached_file|
-            @issue.attached_files.create(file: attached_file)
-          }
-        end
 
         format.html {redirect_to @issue, notice: 'Issue was successfully updated.'}
         format.json {render :show, status: :ok, location: @issue}
@@ -108,6 +110,9 @@ class IssuesController < ApplicationController
   # DELETE /issues/1
   # DELETE /issues/1.json
   def destroy
+    if @issue.user != current_user
+      return render json: { error: 'Operation not permitted'}, status: 403
+    end
     @issue.destroy
     respond_to do |format|
       format.html {redirect_to issues_url, notice: 'Issue was successfully destroyed.'}
@@ -123,7 +128,7 @@ class IssuesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def issue_params
-    params.fetch(:issue, {}).permit(:title, :description, :kind, :priority, :status, :assignee_id)
+    params.permit(:title, :description, :kind, :priority, :status, :assignee_id)
   end
 
   def sort_column
@@ -132,9 +137,5 @@ class IssuesController < ApplicationController
 
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : ''
-  end
-
-  def set_auth
-    @auth = session[:omniauth] if session[:omniauth]
   end
 end
