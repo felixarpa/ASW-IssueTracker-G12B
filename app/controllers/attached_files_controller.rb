@@ -4,15 +4,22 @@ class AttachedFilesController < ApplicationController
   # DELETE /attached_files/{:file_id}
   # DELETE /attached_files/{:file_id}.json
   def destroy
-    if @attached_file.destroy
-      if request.path == '/issues/' + @issue.id.to_s + '/edit'
-        format.html { redirect_to "/issues/#{ @issue.id }/edit" }
-      else
-        format.html { redirect_to "/issues/#{ @issue.id }" }
-      end
-      format.json { render json: { message: "Files attached succesfully "}, status: :ok }
+    if request.path == '/issues/' + @issue.id.to_s + '/edit'
+      redirectUrl = "/issues/#{ @issue.id }/edit"
     else
-      render json: { error: 'The attached file doesn\'t exist' }, status: :not_found
+      redirectUrl = "/issues/#{ @issue.id }"
+    end
+
+    if @attached_file.destroy
+      respond_to do |format|
+        format.html { redirect_to redirectUrl }
+        format.json { render json: { message: 'Attached file deleted' }, status: :ok }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to "/issues/#{ @issue.id }" }
+        format.json { render json: { error: 'The attached file doesn\'t exist' }, status: :not_found }
+      end
     end
   end
 
