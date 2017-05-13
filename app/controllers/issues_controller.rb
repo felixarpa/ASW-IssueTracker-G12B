@@ -79,6 +79,13 @@ class IssuesController < ApplicationController
           }
         end
 
+        if params[:comment] and current_user
+          comment = @issue.comments.new
+          comment.user = current_user
+          comment.body = params[:comment]
+          comment.save
+        end
+
         format.html {redirect_to @issue, notice: 'Issue was successfully updated.'}
         format.json {render json: @issue, status: :created, serializer:
             ShowIssueSerializer}
