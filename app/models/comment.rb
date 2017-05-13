@@ -4,7 +4,6 @@ class Comment < ApplicationRecord
 
   def as_json(options = {})
     super(options.reverse_merge(except: [:user_id, :issue_id]))
-        .merge(href: "/issues/#{self.issue_id}/comments/#{self.id}")
         .merge(_links: {
             creator: self.user.as_json_summary
         })
