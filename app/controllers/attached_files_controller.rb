@@ -10,7 +10,7 @@ class AttachedFilesController < ApplicationController
       else
         format.html { redirect_to "/issues/#{ @issue.id }" }
       end
-      format.json { render json: { message: "Files attached succesfully "}, status: :created }
+      format.json { render json: { message: "Files attached succesfully "}, status: :ok }
     else
       render json: { error: 'The attached file doesn\'t exist' }, status: :not_found
     end
