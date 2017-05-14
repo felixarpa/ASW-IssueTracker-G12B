@@ -154,7 +154,7 @@ class IssuesController < ApplicationController
   def prepare_attachments
     if params[:attached_files]
       params[:attached_files].each do |f|
-        return render json: { error: 'Missing attachment parameters' }, status: :bad_request unless f[:name] && f[:type] && f[:content]
+        return render json: { error: 'Missing attachment parameters' }, status: :bad_request unless f[:name] && f[:content]
       end
     end
 
