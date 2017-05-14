@@ -1,6 +1,7 @@
 class IssuesController < ApplicationController
   helper_method :sort_column, :sort_direction
   before_action :set_issue, only: [:show, :edit, :update, :destroy, :attach]
+  before_action :prepare_attachments, only: [:create, :update]
   skip_before_action :authenticate_request, only: [:index, :show]
 
   # GET /issues
@@ -72,11 +73,8 @@ class IssuesController < ApplicationController
     @issue.user = current_user
     respond_to do |format|
       if @issue.save
-
-        if params[:attached_files]
-          params[:attached_files].each {|attached_file|
-            @issue.attached_files.create(file: attached_file)
-          }
+        if @attachments
+          @attachments.each do |a| @issue.attached_files.create(file: a) end
         end
 
         if params[:comment] and current_user
@@ -99,16 +97,15 @@ class IssuesController < ApplicationController
   # PATCH/PUT /issues/1
   # PATCH/PUT /issues/1.json
   def update
-    if params[:attached_files]
-      params[:attached_files].each {|attached_file|
-        @issue.attached_files.create(file: attached_file)
-      }
-    end
     if @issue.user != current_user && !issue_params.empty?
       return render json: { error: 'Operation not permitted'}, status: 403
     end
+
     respond_to do |format|
       if @issue.update(issue_params)
+        if @attachments
+          @attachments.each do |a| @issue.attached_files.create(file: a) end
+        end
 
         format.html {redirect_to @issue, notice: 'Issue was successfully updated.'}
         format.json {render json: @issue, status: :ok, serializer:
@@ -152,5 +149,28 @@ class IssuesController < ApplicationController
 
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : ''
+  end
+
+  def prepare_attachments
+    if params[:attached_files]
+      params[:attached_files].each do |f|
+        return render json: { error: 'Missing attachment parameters' }, status: :bad_request unless f[:name] && f[:type] && f[:content]
+      end
+    end
+
+    @attachments = []
+    params[:attached_files].each do |f|
+      attachment = f
+      attachment = parse_attachment(f) unless f.is_a?(ActionDispatch::Http::UploadedFile)
+      @attachments << attachment
+    end
+  end
+
+  def parse_attachment(attachment_data)
+    attachment = Paperclip.io_adapters.for(attachment_data[:content])
+    attachment.original_filename = attachment_data[:name]
+    attachment
+  rescue
+    return render json: { error: 'Invalid attachment' }, status: :bad_request
   end
 end

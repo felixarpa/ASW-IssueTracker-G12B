@@ -60,7 +60,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'omniauth'
 gem 'omniauth-twitter', '~>1.1.0'
 
-gem 'paperclip'
+gem 'paperclip', '~> 5.1.0'
 gem 'aws-sdk', '~> 2.3'
 gem 'active_model_serializers'
 gem 'simple_command'
