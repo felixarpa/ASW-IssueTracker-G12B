@@ -1,6 +1,7 @@
 class IssuesController < ApplicationController
   helper_method :sort_column, :sort_direction
   before_action :set_issue, only: [:show, :edit, :update, :destroy, :attach]
+  before_action :check_permission, only: [:update, :destroy, :edit]
   before_action :prepare_attachments, only: [:create, :update]
   skip_before_action :authenticate_request, only: [:index, :show]
 
@@ -97,10 +98,6 @@ class IssuesController < ApplicationController
   # PATCH/PUT /issues/1
   # PATCH/PUT /issues/1.json
   def update
-    if @issue.user != current_user && !issue_params.empty?
-      return render json: { error: 'Operation not permitted'}, status: 403
-    end
-
     respond_to do |format|
       if @issue.update(issue_params)
         if @attachments
@@ -108,12 +105,10 @@ class IssuesController < ApplicationController
         end
 
         format.html {redirect_to @issue, notice: 'Issue was successfully updated.'}
-        format.json {render json: @issue, status: :ok, serializer:
-            ShowIssueSerializer}
+        format.json { render json: @issue, status: :ok, serializer: ShowIssueSerializer }
       else
-        format.html {render :edit}
-        format.json {render json: { error: 'Couldn\'t update issue' }, status:
-            :unprocessable_entity}
+        format.html { render :edit }
+        format.json { render json: @issue.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -121,9 +116,6 @@ class IssuesController < ApplicationController
   # DELETE /issues/1
   # DELETE /issues/1.json
   def destroy
-    if @issue.user != current_user
-      return render json: { error: 'Operation not permitted'}, status: 403
-    end
     @issue.destroy
     respond_to do |format|
       format.html {redirect_to issues_url, notice: 'Issue was successfully destroyed.'}
@@ -136,6 +128,12 @@ class IssuesController < ApplicationController
   def set_issue
     @issue = Issue.find_by(id: params[:id])
     render json: { message: 'Issue not found' }, status: :not_found if @issue.nil?
+  end
+
+  def check_permission
+    if @issue.user != current_user
+      return render json: { error: 'Operation not permitted'}, status: 403
+    end
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
@@ -152,17 +150,16 @@ class IssuesController < ApplicationController
   end
 
   def prepare_attachments
+    @attachments = []
     if params[:attached_files]
       params[:attached_files].each do |f|
-        return render json: { error: 'Missing attachment parameters' }, status: :bad_request unless f[:name] && f[:content]
+        if f.is_a?(ActionDispatch::Http::UploadedFile)
+          @attachments << f
+        else
+          return render json: { error: 'Missing attachment parameters' }, status: :bad_request unless f[:name] && f[:content]
+          @attachments << parse_attachment(f)
+        end
       end
-    end
-
-    @attachments = []
-    params[:attached_files].each do |f|
-      attachment = f
-      attachment = parse_attachment(f) unless f.is_a?(ActionDispatch::Http::UploadedFile)
-      @attachments << attachment
     end
   end
 
