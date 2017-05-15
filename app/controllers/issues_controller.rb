@@ -2,7 +2,6 @@ class IssuesController < ApplicationController
   helper_method :sort_column, :sort_direction
   before_action :set_issue, only: [:show, :edit, :update, :destroy, :attach]
   before_action :prepare_attachments, only: [:create, :update]
-  before_action :create_comment, only: [:update]
   skip_before_action :authenticate_request, only: [:index, :show]
 
   # GET /issues
@@ -104,6 +103,8 @@ class IssuesController < ApplicationController
           @attachments.each do |a| @issue.attached_files.create(file: a) end
         end
 
+        create_comment
+
         format.html {redirect_to @issue, notice: 'Issue was successfully updated.'}
         format.json { render json: @issue, status: :ok, serializer: ShowIssueSerializer }
       else
@@ -183,7 +184,7 @@ class IssuesController < ApplicationController
     end
 
     new_assignee = nil
-    unless params[:assignee_id].nil? && !User.exists?(id: params[:assignee_id])
+    unless params[:assignee_id].nil? || !User.exists?(params[:assignee_id])
       new_assignee = User.find_by(id: params[:assignee_id]).name
     end
 
@@ -207,13 +208,18 @@ class IssuesController < ApplicationController
       comment_body += ' ' + added_attachments.to_sentence
       end
 
-    unless new_assignee.nil?
+    if params.has_key?(:assignee_id)
       if edited_params.empty? and added_attachments.empty?
         comment_body += current_user.name
       else
         comment_body += ' and'
       end
-      comment_body += ' has assigned this issue to ' + new_assignee
+
+      if User.find_by(id: params[:assignee_id]).nil?
+        comment_body += ' has removed the assignee'
+      else
+        comment_body += ' has assigned this issue to ' + new_assignee
+      end
     end
 
     unless comment_body.empty?
