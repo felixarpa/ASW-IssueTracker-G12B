@@ -14,7 +14,7 @@ class IssuesController < ApplicationController
     @issues = @issues.where(status: params[:status]) if params[:status]
 
     @issues = @issues.where(assignee_id: User.find_by(nickname:
-                              params[:responsible]).id) if params[:responsible]
+                                                          params[:responsible]).id) if params[:responsible]
 
     if params[:watching]
       @user = User.find_by(nickname: params[:watching])
@@ -22,7 +22,7 @@ class IssuesController < ApplicationController
       if @user.nil?
         @issues.clear
       else
-        @issues = @issues.select { |i| i.watchers.exists?(@user.id) }
+        @issues = @issues.select {|i| i.watchers.exists?(@user.id)}
       end
     end
 
@@ -32,8 +32,7 @@ class IssuesController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json { render json: @issues, status: :ok, each_serializer:
-          IndexIssueSerializer }
+      format.json {render json: @issues, status: :ok, each_serializer: IndexIssueSerializer}
     end
   end
 
@@ -43,14 +42,7 @@ class IssuesController < ApplicationController
     @comments = @issue.comments if @issue
     respond_to do |format|
       format.html
-      if @issue
-        format.json { render json: @issue, status: :ok,
-                             serializer: ShowIssueSerializer }
-      else
-        format.json { render json: { error:
-                                         { message: 'Issue does not exist' }
-        }, status: :not_found }
-      end
+      format.json {render json: @issue, status: :ok, serializer: ShowIssueSerializer}
     end
   end
 
@@ -75,7 +67,9 @@ class IssuesController < ApplicationController
     respond_to do |format|
       if @issue.save
         if @attachments
-          @attachments.each do |a| @issue.attached_files.create(file: a) end
+          @attachments.each do |a|
+            @issue.attached_files.create(file: a)
+          end
         end
 
         if params[:comment] and current_user
@@ -101,14 +95,16 @@ class IssuesController < ApplicationController
     respond_to do |format|
       if @issue.update(issue_params)
         if @attachments
-          @attachments.each do |a| @issue.attached_files.create(file: a) end
+          @attachments.each do |a|
+            @issue.attached_files.create(file: a)
+          end
         end
 
         format.html {redirect_to @issue, notice: 'Issue was successfully updated.'}
-        format.json { render json: @issue, status: :ok, serializer: ShowIssueSerializer }
+        format.json {render json: @issue, status: :ok, serializer: ShowIssueSerializer}
       else
-        format.html { render :edit }
-        format.json { render json: @issue.errors, status: :unprocessable_entity }
+        format.html {render :edit}
+        format.json {render json: @issue.errors, status: :unprocessable_entity}
       end
     end
   end
@@ -119,7 +115,7 @@ class IssuesController < ApplicationController
     @issue.destroy
     respond_to do |format|
       format.html {redirect_to issues_url, notice: 'Issue was successfully destroyed.'}
-      format.json { render json: { message: 'Issue deleted successfully' }, status: :ok }
+      format.json {render json: {message: 'Issue deleted successfully'}, status: :ok}
     end
   end
 
@@ -127,7 +123,7 @@ class IssuesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_issue
     @issue = Issue.find_by(id: params[:id])
-    render json: { message: 'Issue not found' }, status: :not_found if @issue.nil?
+    render json: {error: 'Issue not found'}, status: :not_found if @issue.nil?
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
@@ -150,7 +146,7 @@ class IssuesController < ApplicationController
         if f.is_a?(ActionDispatch::Http::UploadedFile)
           @attachments << f
         else
-          return render json: { error: 'Missing attachment parameters' }, status: :bad_request unless f[:name] && f[:content]
+          return render json: {error: 'Missing attachment parameters'}, status: :bad_request unless f[:name] && f[:content]
           @attachments << parse_attachment(f)
         end
       end
@@ -162,7 +158,7 @@ class IssuesController < ApplicationController
     attachment.original_filename = attachment_data[:name]
     attachment
   rescue
-    return render json: { error: 'Invalid attachment' }, status: :bad_request
+    return render json: {error: 'Invalid attachment'}, status: :bad_request
   end
 
   def create_comment
@@ -205,7 +201,8 @@ class IssuesController < ApplicationController
       comment_body += ' has attached the file'
       comment_body += 's' if added_attachments.size > 1
       comment_body += ' ' + added_attachments.to_sentence
-      end
+    end
+
 
     unless new_assignee.nil?
       if edited_params.empty? and added_attachments.empty?
