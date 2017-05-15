@@ -23,7 +23,6 @@ class User < ApplicationRecord
 
   def as_json_summary
     {
-        href: "/users/#{self.id}",
         name: self.name,
         nickname: self.nickname,
         image: { href: self.image_url }

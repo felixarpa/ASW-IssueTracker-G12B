@@ -6,12 +6,11 @@ class AttachedFile < ActiveRecord::Base
   validates_attachment :file, size: { in: 0..5.megabytes }
 
   def as_json(options = {})
-    super();
+    super()
     {
       name: file_file_name,
       type: file_content_type,
-      url: file.url,
-      href: "/attached_files/#{id}"
+      _links: { self: { href: "/attached_files/#{id}" }, url: file.url }
     }
   end
 end
