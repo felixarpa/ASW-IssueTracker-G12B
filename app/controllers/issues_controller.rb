@@ -119,7 +119,7 @@ class IssuesController < ApplicationController
   def destroy
     @issue.destroy
     respond_to do |format|
-      format.html {redirect_to issues_url, : 'Issue was successfully destroyed.'}
+      format.html {redirect_to issues_url, notice: 'Issue was successfully destroyed.'}
       format.json { render json: { message: 'Issue deleted successful' }}
     end
   end
