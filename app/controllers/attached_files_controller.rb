@@ -29,9 +29,6 @@ class AttachedFilesController < ApplicationController
     @attached_file = AttachedFile.find_by(id: params[:id])
     render json: { error: 'Attached file not found' }, status: :not_found if @attached_file.nil?
     if @attached_file
-      if @attached_file.issue.user != current_user
-        render json: { error: 'Operation not permitted' }, status: :forbidden
-      end
       @issue = Issue.find_by(id: @attached_file.issue_id)
       render json: { message: 'Issue related to attached file not found' }, status: :not_found if @issue.nil?
     end
