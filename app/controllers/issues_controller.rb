@@ -2,6 +2,7 @@ class IssuesController < ApplicationController
   helper_method :sort_column, :sort_direction
   before_action :set_issue, only: [:show, :edit, :update, :destroy, :attach]
   before_action :prepare_attachments, only: [:create, :update]
+  before_action :create_comment, only: [:update]
   skip_before_action :authenticate_request, only: [:index, :show]
 
   # GET /issues
@@ -62,7 +63,7 @@ class IssuesController < ApplicationController
   def edit
   end
 
-  # POST /issues/1/attach
+  # GET /issues/1/attach
   def attach
   end
 
@@ -162,5 +163,74 @@ class IssuesController < ApplicationController
     attachment
   rescue
     return render json: { error: 'Invalid attachment' }, status: :bad_request
+  end
+
+  def create_comment
+    comment_body = ''
+
+    edited_params = []
+    edited_params << 'title' if params[:title]
+    edited_params << 'description' if params[:description]
+    edited_params << 'kind' if params[:kind]
+    edited_params << 'status' if params[:status]
+    edited_params << 'priority' if params[:priority]
+
+    added_attachments = []
+    if @attachments
+      @attachments.each do |f|
+        added_attachments << f.original_filename
+      end
+    end
+
+    new_assignee = nil
+    if params.has_key?(:assignee_id)
+      new_assignee = User.find_by(id: params[:assignee_id]).name
+    end
+
+    unless edited_params.empty?
+      comment_body += current_user.name
+      comment_body += ' has modified the issue attribute'
+      comment_body += 's' if edited_params.size > 1
+      comment_body += ' ' + edited_params.to_sentence
+    end
+
+    unless added_attachments.empty?
+      if edited_params.empty?
+        comment_body += current_user.name
+      elsif new_assignee.nil?
+        comment_body += ' and'
+      else
+        comment_body += ','
+      end
+      comment_body += ' has attached the file'
+      comment_body += 's' if added_attachments.size > 1
+      comment_body += ' ' + added_attachments.to_sentence
+      end
+
+    unless new_assignee.nil?
+      if edited_params.empty? and added_attachments.empty?
+        comment_body += current_user.name
+      else
+        comment_body += ' and'
+      end
+      comment_body += ' has assigned this issue to ' + new_assignee
+    end
+
+    unless comment_body.empty?
+      comment_body += '.'
+    end
+
+    if params[:comment]
+      comment_body += "\n\n"
+      comment_body += params[:comment]
+    end
+
+    unless comment_body.empty?
+      comment = Comment.new
+      comment.body = comment_body
+      comment.issue = @issue
+      comment.user = current_user
+      comment.save
+    end
   end
 end
