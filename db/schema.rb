@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170514163236) do
+ActiveRecord::Schema.define(version: 20170509151758) do
 
   create_table "attached_files", force: :cascade do |t|
     t.integer  "issue_id"
@@ -39,10 +39,6 @@ ActiveRecord::Schema.define(version: 20170514163236) do
     t.integer  "kind",        default: 0
     t.integer  "priority",    default: 2
     t.string   "status",      default: "New"
-    t.integer  "user_id"
-    t.integer  "assignee_id"
-    t.index ["assignee_id"], name: "index_issues_on_assignee_id"
-    t.index ["user_id"], name: "index_issues_on_user_id"
   end
 
   create_table "table_votes", force: :cascade do |t|

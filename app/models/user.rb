@@ -28,4 +28,9 @@ class User < ApplicationRecord
         image: { href: self.image_url }
     }
   end
+
+  def as_json(options = {})
+    super(options.reverse_merge(except: [:id, :api_key, :updated_at,
+                                         :uid]))
+  end
 end
