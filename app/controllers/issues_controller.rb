@@ -1,7 +1,6 @@
 class IssuesController < ApplicationController
   helper_method :sort_column, :sort_direction
   before_action :set_issue, only: [:show, :edit, :update, :destroy, :attach]
-  before_action :check_permission, only: [:update, :destroy, :edit]
   before_action :prepare_attachments, only: [:create, :update]
   skip_before_action :authenticate_request, only: [:index, :show]
 
@@ -128,12 +127,6 @@ class IssuesController < ApplicationController
   def set_issue
     @issue = Issue.find_by(id: params[:id])
     render json: { message: 'Issue not found' }, status: :not_found if @issue.nil?
-  end
-
-  def check_permission
-    if @issue.user != current_user
-      return render json: { error: 'Operation not permitted'}, status: 403
-    end
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
