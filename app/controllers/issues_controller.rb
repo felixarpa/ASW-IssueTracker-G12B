@@ -183,7 +183,7 @@ class IssuesController < ApplicationController
     end
 
     new_assignee = nil
-    if params.has_key?(:assignee_id)
+    unless params[:assignee_id].nil? && !User.exists?(id: params[:assignee_id])
       new_assignee = User.find_by(id: params[:assignee_id]).name
     end
 

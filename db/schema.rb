@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170509151758) do
+ActiveRecord::Schema.define(version: 20170514163236) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "attached_files", force: :cascade do |t|
     t.integer  "issue_id"
@@ -20,7 +23,7 @@ ActiveRecord::Schema.define(version: 20170509151758) do
     t.string   "file_content_type"
     t.integer  "file_file_size"
     t.datetime "file_updated_at"
-    t.index ["issue_id"], name: "index_attached_files_on_issue_id"
+    t.index ["issue_id"], name: "index_attached_files_on_issue_id", using: :btree
   end
 
   create_table "comments", force: :cascade do |t|
@@ -39,22 +42,26 @@ ActiveRecord::Schema.define(version: 20170509151758) do
     t.integer  "kind",        default: 0
     t.integer  "priority",    default: 2
     t.string   "status",      default: "New"
+    t.integer  "user_id"
+    t.integer  "assignee_id"
+    t.index ["assignee_id"], name: "index_issues_on_assignee_id", using: :btree
+    t.index ["user_id"], name: "index_issues_on_user_id", using: :btree
   end
 
   create_table "table_votes", force: :cascade do |t|
     t.integer "user_id"
     t.integer "issue_id"
-    t.index ["issue_id", "user_id"], name: "index_table_votes_on_issue_id_and_user_id", unique: true
-    t.index ["issue_id"], name: "index_table_votes_on_issue_id"
-    t.index ["user_id"], name: "index_table_votes_on_user_id"
+    t.index ["issue_id", "user_id"], name: "index_table_votes_on_issue_id_and_user_id", unique: true, using: :btree
+    t.index ["issue_id"], name: "index_table_votes_on_issue_id", using: :btree
+    t.index ["user_id"], name: "index_table_votes_on_user_id", using: :btree
   end
 
   create_table "table_watchers", force: :cascade do |t|
     t.integer "user_id"
     t.integer "issue_id"
-    t.index ["issue_id", "user_id"], name: "index_table_watchers_on_issue_id_and_user_id", unique: true
-    t.index ["issue_id"], name: "index_table_watchers_on_issue_id"
-    t.index ["user_id"], name: "index_table_watchers_on_user_id"
+    t.index ["issue_id", "user_id"], name: "index_table_watchers_on_issue_id_and_user_id", unique: true, using: :btree
+    t.index ["issue_id"], name: "index_table_watchers_on_issue_id", using: :btree
+    t.index ["user_id"], name: "index_table_watchers_on_user_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -66,7 +73,7 @@ ActiveRecord::Schema.define(version: 20170509151758) do
     t.string   "image_url"
     t.string   "nickname"
     t.string   "api_key"
-    t.index ["api_key"], name: "index_users_on_api_key", unique: true
+    t.index ["api_key"], name: "index_users_on_api_key", unique: true, using: :btree
   end
 
 end
