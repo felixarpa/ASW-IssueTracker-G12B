@@ -23,7 +23,7 @@ class ShowIssueSerializer < IssueSerializer
 
   def _links
     links = {
-        self: { href: "/issues/#{object.id}" },
+        self: { href: "/issues/#{object.id}.json" },
         creator: object.user.as_json_summary,
     }
     if object.assignee
@@ -33,8 +33,8 @@ class ShowIssueSerializer < IssueSerializer
 
     if current_user
       links = links.merge(
-          vote: { href: "/issues/#{object.id}/vote" },
-          watch: { href: "/issues/#{object.id}/watch" }
+          vote: { href: "/issues/#{object.id}/vote.json" },
+          watch: { href: "/issues/#{object.id}/watch.json" }
       )
     end
 
