@@ -70,7 +70,7 @@ class CommentsController < ApplicationController
       @comment = Comment.find_by(id: params[:comment_id])
       if @comment.nil?
         respond_to do |format|
-          format.json { render json: { error: 'Comment does not exist' },
+          format.json { render json: { error: 'Comment not found' },
                                status: :not_found }
         end
       end
@@ -80,7 +80,7 @@ class CommentsController < ApplicationController
     @issue = Issue.find_by(id: params[:id])
     if @issue.nil?
       respond_to do |format|
-        format.json { render json: { error: 'Issue does not exist' },
+        format.json { render json: { error: 'Issue not found' },
                              status: :not_found }
       end
     end
