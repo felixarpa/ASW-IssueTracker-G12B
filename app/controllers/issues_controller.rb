@@ -12,8 +12,14 @@ class IssuesController < ApplicationController
     @issues = @issues.where(priority: params[:priority]) if params[:priority]
     @issues = @issues.where(status: params[:status]) if params[:status]
 
-    @issues = @issues.where(assignee_id: User.find_by(nickname:
-                                                          params[:responsible]).id) if params[:responsible]
+    if params.has_key?(:responsible)
+      if User.exists?(nickname: params[:responsible])
+        @issues = @issues.where(assignee_id: User
+                                   .find_by(nickname: params[:responsible]).id)
+      else
+        @issues = []
+      end
+    end
 
     if params[:watching]
       @user = User.find_by(nickname: params[:watching])
@@ -23,10 +29,6 @@ class IssuesController < ApplicationController
       else
         @issues = @issues.select {|i| i.watchers.exists?(@user.id)}
       end
-    end
-
-    if params[:sort] and params[:direction]
-      @issues.order(params[:sort] + ' ' + params[:direction])
     end
 
     respond_to do |format|

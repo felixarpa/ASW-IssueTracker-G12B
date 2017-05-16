@@ -6,10 +6,10 @@ class WatchController < ApplicationController
   def create
     if @issue.watchers.exists?(current_user.id)
       @issue.watchers.delete(current_user)
-      message = 'Unwatched issue'
+      message = 'Issue unwatched'
     else
       @issue.watchers << current_user
-      message = 'Watched issue'
+      message = 'Issue watched'
     end
     respond_to do |format|
       format.html { redirect_to "/issues/#{ @issue.id }" }
