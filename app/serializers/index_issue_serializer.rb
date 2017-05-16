@@ -12,7 +12,7 @@ class IndexIssueSerializer < IssueSerializer
 
   def _links
     links = {
-        self: { href: "/issues/#{object.id}.json" },
+        self: { href: "/issues/#{object.id}" },
         creator: object.user.as_json_summary,
     }
 
