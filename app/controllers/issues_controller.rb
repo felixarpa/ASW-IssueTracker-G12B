@@ -23,16 +23,11 @@ class IssuesController < ApplicationController
 
     if params[:watching]
       @user = User.find_by(nickname: params[:watching])
-      @issues = @issues.to_a
       if @user.nil?
         @issues.clear
       else
         @issues = @issues.select {|i| i.watchers.exists?(@user.id)}
       end
-    end
-
-    if params[:sort] and params[:direction]
-      @issues.order(params[:sort] + ' ' + params[:direction])
     end
 
     respond_to do |format|
