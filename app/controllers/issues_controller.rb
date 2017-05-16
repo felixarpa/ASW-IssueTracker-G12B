@@ -31,9 +31,6 @@ class IssuesController < ApplicationController
       end
     end
 
-    if params[:votes]
-    end
-
     respond_to do |format|
       format.html
       format.json {render json: @issues, status: :ok, each_serializer: IndexIssueSerializer}
