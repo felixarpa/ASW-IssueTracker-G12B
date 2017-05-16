@@ -16,7 +16,5 @@ Rails.application.routes.draw do
 
   get 'issues/:id/attach', to: 'issues#attach', as: :attach_to_issue
   resources :attached_files, only: :destroy
-
-  get 'issues/index' => 'issues#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
