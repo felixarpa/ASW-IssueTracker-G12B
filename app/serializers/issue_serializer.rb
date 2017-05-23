@@ -1,5 +1,5 @@
 class IssueSerializer < ActiveModel::Serializer
-  attributes :title, :description, :created_at, :updated_at, :kind,
+  attributes :id, :title, :description, :created_at, :updated_at, :kind,
              :priority, :status, :votes
 
   def votes
