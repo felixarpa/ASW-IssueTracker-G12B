@@ -30,7 +30,7 @@ class User < ApplicationRecord
   end
 
   def as_json(options = {})
-    response = super(options.reverse_merge(only: [:name, :nickname]))
+    response = super(options.reverse_merge(only: [:id, :name, :nickname]))
     response = response.merge(_links: { image: { href: self.image_url } }) if self.image_url
     response
   end
