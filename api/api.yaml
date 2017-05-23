@@ -1,0 +1,899 @@
+swagger: '2.0'
+info:
+  description: |
+    API de l'Issue Tracker del projecte de ASW.
+    <p><b>API KEYS:</b></p>
+    <ul>
+    <li>cKfSt15jxpPcparbdpx7KhTP</li>
+    <li>2F67sLQsXM7qnPRsY8niRGan</li>
+    </ul>
+  title: Issue Tracker
+  version: 1.0.0
+host: issue-tracker-g12b.herokuapp.com
+securityDefinitions:
+  apiKey:
+    type: apiKey
+    description: API key corresponent a un usuari generada durant la seva creació.
+    name: X-API-Key
+    in: header
+
+tags:
+- name: "Issues"
+  description: "Operations about issues"
+- name: "Attached files"
+  description: "Operations about attached files"
+- name: "Users"
+  description: "Operations about users"
+  
+schemes:
+- http
+paths:
+  /issues:
+    get:
+      tags:
+      - "Issues"
+      summary: "Get all issues"
+      description: "Returns the list of all issues in the issue tracker."
+      security:
+      - apiKey: []
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "query"
+        name: "kind"
+        description: "Filter the results by issue type"
+        required: false
+        type: "string"
+        enum:
+        - "bug"
+        - "enhancement"
+        - "proposal"
+        - "task"
+      - in: "query"
+        name: "status"
+        description: "Filter the results by issue status"
+        required: false
+        type: "string"
+        enum:
+        - "open"
+        - "on_hold"
+        - "invalid_issue"
+        - "resolved"
+        - "closed"
+      - in: "query"
+        name: "priority"
+        description: "Filter the results by issue priority"
+        required: false
+        type: "string"
+        enum:
+        - "trivial"
+        - "minor"
+        - "major"
+        - "critical"
+        - "blocker"
+      - in: "query"
+        name: "responsible"
+        description: "Filter the results by assignee (nickname)"
+        required: false
+        type: "string"
+      - in: "query"
+        name: "watching"
+        description: "Show issues watched by a user (nickname)"
+        required: false
+        type: "string"
+      - in: "query"
+        name: "sort"
+        description: "Sort the results by the param specified"
+        required: false
+        type: "string"
+        enum:
+        - "kind"
+        - "status"
+        - "priority"
+        - "assignee_id"
+        - "votes"
+        - "created_at"
+        - "updated_at"
+      - in: "query"
+        name: "direction"
+        description: "Direction of the sorting (asc or desc)"
+        required: false
+        type: "string"
+        enum:
+        - "asc"
+        - "desc"
+      responses:
+        200:
+          description: "Returns the list of all issues"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/IssueIndex"
+    post:
+      security:
+      - apiKey: []
+      tags:
+      - "Issues"
+      summary: "Create an issue"
+      description: "Creates an issue with the parameters in the request body and returns the full formatted issue after being created."
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Issue object that needs to be created"
+        required: true
+        schema:
+          $ref: "#/definitions/IssueCreate"
+      responses:
+        201:
+          description: "Issue created successfully"
+          schema:
+            $ref: "#/definitions/IssueShow"
+        400:
+          $ref: "#/responses/AttachmentError"
+        401:
+          $ref: "#/responses/UnauthorizedResponse"
+        422:
+          description: "Missing issue title / Assignee does not exist"
+          schema:
+            type: "object"
+            properties:
+              title:
+                type: "array"
+                items: { example: "can't be blank" }
+              assignee_id:
+                type: "array"
+                items: { example: "Assignee does not exist" }
+          
+  /issues/{issueID}:
+    get:
+      tags:
+      - "Issues"
+      summary: "Get an issue"
+      description: "Returns all the information for the issue with ID <b>issueID</b>. If there is a user authenticated, it also contains whether it has voted or is watching the issue."
+      security:
+      - apiKey: []
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "issueID"
+        description: ""
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "Returns all issue info"
+          schema:
+            $ref: "#/definitions/IssueShow"
+        404:
+          $ref: "#/responses/IssueNotFound"
+            
+    delete:
+      tags:
+      - "Issues"
+      summary: "Delete an issue"
+      description: "Deletes the issue with ID <b>issueID</b>"
+      security:
+      - apiKey: []
+      parameters:
+      - in: "path"
+        name: "issueID"
+        description: "ID of the issue to delete"
+        required: true
+        type: "integer"         
+      responses:
+        200:
+          description: "Issue successfully deleted"
+          schema:
+            type: "object"
+            properties:
+              message:
+                type: "string"
+                example: "Issue deleted successfully"
+        401:
+          $ref: "#/responses/UnauthorizedResponse"
+        404:
+          $ref: "#/responses/IssueNotFound"
+    
+    patch:
+      tags:
+      - "Issues"
+      summary: "Update an issue"
+      description: "Updates the attributes specified of the issue with ID <b>issueID</b>"
+      security:
+      - apiKey: []
+      parameters:
+      - in: "path"
+        name: "issueID"
+        description: "ID of the issue to update"
+        required: true
+        type: "integer"
+      - in: "body"
+        name: "body"
+        description: "Issue object with the attributes to update"
+        required: false
+        schema:
+          $ref: "#/definitions/IssueUpdate"
+      responses:
+        200:
+          description: "Issue successfully updated. Returns all issue info"
+          schema:
+            $ref: "#/definitions/IssueShow"
+        401:
+          $ref: "#/responses/UnauthorizedResponse"
+        404:
+          $ref: "#/responses/IssueNotFound"
+        422:
+          description: "Assignee does not exist"
+          schema:
+            type: "object"
+            properties:
+              assignee_id:
+                type: "array"
+                items: { example: "Assignee does not exist" }
+          
+  /issues/{issueID}/vote:
+    post:
+      tags:
+      - "Issues"
+      summary: "Vote or unvote an issue"
+      description: "Votes or unvotes the issue with ID <b>issueID</b> as the current authenticated user"
+      security:
+      - apiKey: []
+      parameters:
+      - in: "path"
+        name: "issueID"
+        description: "ID of the issue to vote/unvote"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "Issue voted / Issue unvoted"
+          schema:
+            type: "object"
+            properties:
+              message:
+                type: "string"
+                example: "Issue voted"
+        401:
+          $ref: "#/responses/UnauthorizedResponse"
+        404:
+          $ref: "#/responses/IssueNotFound"
+          
+  /issues/{issueID}/watch:
+    post:
+      tags:
+      - "Issues"
+      summary: "Watch or unwatch an issue"
+      description: "Watches or unwatches the issue with ID <b>issueID</b> as the current authenticated user"
+      security:
+      - apiKey: []
+      parameters:
+      - in: "path"
+        name: "issueID"
+        description: "ID of the issue to watch/unwatch"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "Issue watched / Issue unwatched"
+          schema:
+            type: "object"
+            properties:
+              message:
+                type: "string"
+                example: "Issue watched"
+        401:
+          $ref: "#/responses/UnauthorizedResponse"
+        404:
+          $ref: "#/responses/IssueNotFound"
+          
+  /issues/{issueID}/comments:
+    get:
+      tags:
+      - "Issue comments"
+      summary: "Get all comments of an issue"
+      description: "Returns the list of all comments of the issue with ID <b>issueID</b>."
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "issueID"
+        description: "ID of the issue"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "Returns the list of all comments of the issue"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Comment"
+        404:
+          $ref: "#/responses/IssueNotFound"
+          
+    post:
+      tags:
+      - "Issue comments"
+      summary: "Create an issue coment"
+      description: "Creates an issue comment with the parameters in the request body and returns the full formatted comment after being created."
+      security:
+      - apiKey: []
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "issueID"
+        description: "ID of the issue"
+        required: true
+        type: "integer"
+      - in: "body"
+        name: "body"
+        description: "Comment object that needs to be created"
+        required: true
+        schema:
+          $ref: "#/definitions/CommentCreate"
+      responses:
+        201:
+          description: "Comment created successfully"
+          schema:
+            $ref: "#/definitions/Comment"
+        401:
+          $ref: "#/responses/UnauthorizedResponse"
+        404:
+          $ref: "#/responses/IssueNotFound"
+        422:
+          description: "Missing comment body"
+          schema:
+            type: "object"
+            properties:
+              body:
+                type: "array"
+                items: { example: "can't be blank" }
+                
+  /issues/{issueID}/comments/{commentID}:
+    get:
+      tags:
+      - "Issue comments"
+      summary: "Get an issue comment"
+      description: "Returns all the information for the comment with ID <b>commentID</b> of the issue with ID <b>issueID</b>."
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "issueID"
+        description: "ID of the issue"
+        required: true
+        type: "integer"
+      - in: "path"
+        name: "commentID"
+        description: "ID of the comment"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "Returns all comment info"
+          schema:
+            $ref: "#/definitions/Comment"
+        404:
+          $ref: "#/responses/IssueOrCommentNotFound"
+          
+    delete:
+      tags:
+      - "Issue comments"
+      summary: "Delete an issue comment"
+      description: "Deletes the comment with ID <b>commentID</b> of the isue with ID <b>issueID</b>"
+      security:
+      - apiKey: []
+      parameters:
+      - in: "path"
+        name: "issueID"
+        description: "ID of the issue to delete"
+        required: true
+        type: "integer"   
+      - in: "path"
+        name: "commentID"
+        description: "ID of the comment to delete"
+        required: true
+        type: "integer" 
+      responses:
+        200:
+          description: "Comment successfully deleted"
+          schema:
+            type: "object"
+            properties:
+              message:
+                type: "string"
+                example: "Comment deleted successfully"
+        401:
+          $ref: "#/responses/UnauthorizedResponse"
+        404:
+          $ref: "#/responses/IssueOrCommentNotFound"
+    patch:
+      tags:
+      - "Issue comments"
+      summary: "Update an issue comment"
+      description: "Updates the attributes specified of the comment with ID <b>commentID</b> of the issue with ID <b>issueID</b>"
+      security:
+      - apiKey: []
+      parameters:
+      - in: "path"
+        name: "issueID"
+        description: "ID of the issue to update"
+        required: true
+        type: "integer"
+      - in: "path"
+        name: "commentID"
+        description: "ID of the comment to update"
+        required: true
+        type: "integer"
+      - in: "body"
+        name: "body"
+        description: "Comment object with the attributes to update"
+        required: false
+        schema:
+          $ref: "#/definitions/CommentUpdate"
+      responses:
+        200:
+          description: "Comment successfully updated. Returns all comment info"
+          schema:
+            $ref: "#/definitions/Comment"
+        401:
+          $ref: "#/responses/UnauthorizedResponse"
+        404:
+          $ref: "#/responses/IssueOrCommentNotFound"
+        422:
+          description: "Body can't be blank"
+          schema:
+            type: "object"
+            properties:
+              body:
+                type: "array"
+                items: { example: "body can't be blank" }
+      
+      
+            
+  /attached_files/{fileID}:
+    delete:
+      tags:
+      - "Attached files"
+      summary: "Deletes an attached file"
+      description: "Delete an attached file. Only allowed by the issue creator."
+      produces:
+      - "application/json"
+      security:
+      - apiKey: []
+      parameters:
+      - in: "path"
+        name: "fileID"
+        description: "ID of the attached file"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "Attached file deleted"
+          schema:
+            type: "object"
+            properties:
+              message:
+                type: "string"
+                example: "Attached file deleted"
+        401:
+          $ref: "#/responses/UnauthorizedResponse"
+        404:
+          description: "There is no such attached file with ID {fileID}"
+          schema:
+            type: "object"
+            properties:
+              error:
+                type: "string"
+                example: "Attached file not found"
+
+  /users:
+    get:
+      tags:
+      - "Users"
+      summary: "Get a list of all users"
+      description: "Returns a list of containing the basic details of all users. (To be used to display a list of users when choosing an issue assignee)"
+      produces:
+      - "application/json"
+      security:
+      - apiKey: []
+      responses:
+        200:
+          description: "Returns a list of users"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/UserSummary"
+        401:
+          $ref: "#/responses/UnauthorizedResponse"
+  /me:
+    get:
+      tags:
+      - "Users"
+      summary: "Get info about the authenticated user"
+      description: "Returns the basic information of the current (authenticated) user."
+      produces:
+      - "application/json"
+      security:
+      - apiKey: []
+      responses:
+        200:
+          description: "Returns current user info"
+          schema:
+            $ref: "#/definitions/UserSummary"
+        401:
+          $ref: "#/responses/UnauthorizedResponse"
+      
+
+
+responses:
+  UnauthorizedResponse:
+    description: "Missing authentication or API key / Invalid API key"
+    schema:
+      type: "object"
+      properties:
+        error:
+          type: "string"
+          example: "Missing authentication or API key"
+  IssueNotFound:
+    description: "There is no such issue with ID {issueID}"
+    schema:
+      type: "object"
+      properties:
+        error:
+          type: "string"
+          example: "Issue not found"
+  AttachmentError:
+    description: "Missing attachment parameters / Invalid attachment content"
+    schema:
+      type: "object"
+      properties:
+        error:
+          type: "string"
+          example: "Missing attachment parameters"
+  IssueOrCommentNotFound:
+    description: "Issue not found / Comment not found"
+    schema:
+      type: "object"
+      properties:
+        error:
+          type: "string"
+          example: "Issue not found"
+          
+          
+          
+          
+definitions:
+  UserSummary:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        example: "John Appleseed"
+      nickname:
+        type: "string"
+        example: "john.appleseed"
+      _links:
+        type: "object"
+        properties:
+          image:
+            type: "object"
+            properties:
+              href:
+                type: "string"
+                example: "http://google.com/image.png"
+  
+  IssueIndex:
+    type: "object"
+    properties:
+      title:
+        type: "string"
+        example: "Issue title"
+      description:
+        type: "string"
+        example: "This is an issue description"
+      created_at:
+        type: "string"
+        format: "date"
+        example: "2017-05-07T18:28:01.933Z"
+      updated_at:
+        type: "string"
+        format: "date"
+        example: "2017-05-07T18:28:01.933Z"
+      kind:
+        type: "string"
+        example: "bug"
+      priority:
+        type: "string"
+        example: "major"
+      status:
+        type: "string"
+        example: "new_issue"
+      votes:
+        type: "integer"
+        example: 1
+      voted_by_current_user:
+        type: "boolean"
+        example: true
+      _links:
+        type: "object"
+        properties:
+          self:
+            type: "object"
+            properties:
+              href:
+                type: "string"
+                example: "/issues/1"
+          creator:
+            $ref: "#/definitions/UserSummary"
+          assignee:
+            $ref: "#/definitions/UserSummary"
+  IssueCreate:
+    type: "object"
+    required:
+    - title
+    properties:
+      title:
+        type: "string"
+        description: "Title of the issue"
+        example: "New issue title"
+      description:
+        type: "string"
+        description: "Description of the issue"
+        example: "New issue description..."
+      assignee_id:
+        type: "integer"
+        description: "ID of the user assigned to an issue"
+        example: 1
+      kind:
+        type: "string"
+        description: "Kind of the issue"
+        enum:
+        - "bug"
+        - "enhancement"
+        - "proposal"
+        - "task"
+      priority:
+        type: "string"
+        description: "Priority of the issue"
+        enum:
+        - "trivial"
+        - "minor"
+        - "major"
+        - "critical"
+        - "blocker"
+      status:
+        type: "string"
+        description: "Status of the issue"
+        enum:
+        - "open"
+        - "on_hold"
+        - "invalid_issue"
+        - "resolved"
+        - "closed"
+      comment:
+        type: "string"
+        description: "Comment of the issue creation"
+        example: "Body of the comment"
+      attached_files:
+        type: "array"
+        description: "Files attached to the issue"
+        items: {
+          $ref: "#/definitions/AttachedFileUpload"
+        }
+  
+  IssueUpdate:
+    type: "object"
+    properties:
+      title:
+        type: "string"
+        description: "Title of the issue"
+        example: "New issue title"
+      description:
+        type: "string"
+        description: "Description of the issue"
+        example: "New issue description..."
+      assignee_id:
+        type: "integer"
+        description: "ID of the user assigned to an issue"
+        example: 1
+      kind:
+        type: "string"
+        description: "Kind of the issue"
+        enum:
+        - "bug"
+        - "enhancement"
+        - "proposal"
+        - "task"
+      priority:
+        type: "string"
+        description: "Priority of the issue"
+        enum:
+        - "trivial"
+        - "minor"
+        - "major"
+        - "critical"
+        - "blocker"
+      status:
+        type: "string"
+        description: "Status of the issue"
+        enum:
+        - "open"
+        - "on_hold"
+        - "invalid_issue"
+        - "resolved"
+        - "closed"
+      comment:
+        type: "string"
+        description: "Comment of the issue update"
+        example: "Body of the comment"
+      attached_files:
+        type: "array"
+        description: "Files attached to the issue"
+        items: {
+          $ref: "#/definitions/AttachedFileUpload"
+        }
+        
+  AttachedFileUpload:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        description: "Name of the attached file"
+        example: "attachment.txt"
+      content:
+        type: "string"
+        format: "byte"
+        description: "Content of the attached file (encoded in base64)"
+        example: "data:text/plain;base64,IyBUZXN0IGF0dGFjaGVkIGZpbGUKClRoaXMgaXMgYW4gZXhhbXBsZSB0ZXh0IQ=="
+  
+  AttachedFile:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        description: "Name of the attached file"
+        example: "attachment.txt"
+      type:
+        type: "string"
+        description: "Content type of the attached file"
+        example: "text/plain"
+      _links:
+        type: "object"
+        properties:
+          self:
+            type: "object"
+            properties:
+              href:
+                type: "string"
+                description: "Reference to the attached file (used in DELETE)"
+                example: "/attached_files/22"
+          url:
+            type: "string"
+            description: "URL of the attached file"
+            example: "https://s3-us-west-1.amazonaws.com/aswissuetrackerg12b/attached_files/files/000/000/045/original/attachment.txt?1494767460"
+        
+  IssueShow:
+    type: "object"
+    properties:
+      title:
+        type: "string"
+        example: "Issue title"
+      description:
+        type: "string"
+        example: "This is an issue description"
+      created_at:
+        type: "string"
+        format: "date"
+        example: "2017-05-07T18:28:01.933Z"
+      updated_at:
+        type: "string"
+        format: "date"
+        example: "2017-05-07T18:28:01.933Z"
+      kind:
+        type: "string"
+        example: "bug"
+      priority:
+        type: "string"
+        example: "major"
+      status:
+        type: "string"
+        example: "new_issue"
+      votes:
+        type: "integer"
+        example: 1
+      watchers:
+        type: "integer"
+        example: 0
+      voted_by_current_user:
+        type: "boolean"
+        example: true
+      watched_by_current_user:
+        type: "boolean"
+        example: false
+      _links:
+        type: "object"
+        properties:
+          self:
+            type: "object"
+            properties:
+              href:
+                type: "string"
+                example: "/issues/1"
+          creator:
+            $ref: "#/definitions/UserSummary"
+          assignee:
+            $ref: "#/definitions/UserSummary"
+          vote:
+            type: "object"
+            properties:
+              href:
+                type: "string"
+                example: "/issues/1/vote"
+          watch:
+            type: "object"
+            properties:
+              href:
+                type: "string"
+                example: "/issues/1/watch"
+      _embedded:
+        type: "object"
+        properties:
+          comments:
+            type: "array"
+            items:
+              $ref: "#/definitions/Comment"
+          attached_files:
+            type: "array"
+            items:
+              $ref: "#/definitions/AttachedFile"
+  
+              
+  Comment:
+    type: "object"
+    properties:
+      body:
+        type: "string"
+        example: "Body of the comment"
+      created_at:
+        type: "string"
+        format: "date"
+        example: "2017-05-07T18:28:01.933Z"
+      updated_at:
+        type: "string"
+        format: "date"
+        example: "2017-05-07T18:28:01.933Z"
+      _links:
+        type: "object"
+        properties:
+          self:
+            type: "object"
+            properties:
+              href:
+                type: "string"
+                example: "/issues/1/comments/1"
+          creator:
+            $ref: "#/definitions/UserSummary"
+  CommentCreate:
+    type: "object"
+    properties:
+      body:
+        type: "string"
+        example: "Body of the comment"
+        
+  CommentUpdate:
+    type: "object"
+    properties:
+      body:
+        type: "string"
+        example: "Body of the comment updated"
