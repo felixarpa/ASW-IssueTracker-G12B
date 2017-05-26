@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  match '*', via: [:options], to: lambda {|_| [204, { 'Content-Type' => 'text/plain' }]}
   root 'issues#index'
   get 'auth/:provider/callback', to: "sessions#create"
   delete 'sign_out', to: "sessions#destroy", as: 'sign_out'
