@@ -17,7 +17,7 @@ module IssueTrackerG12B
         @logger = Rails.logger
         origins '*'
         resource '*',
-                 headers: :any,
+                 headers: '*',
                  methods: [:get, :post, :put, :patch, :delete, :options, :head],
                  credentials: true
       end
