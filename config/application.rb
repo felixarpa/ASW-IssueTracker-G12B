@@ -14,10 +14,9 @@ module IssueTrackerG12B
 
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        @logger = Rails.logger
         origins '*'
         resource '*',
-                 headers: '*',
+                 headers: :any,
                  methods: [:get, :post, :put, :patch, :delete, :options, :head],
                  credentials: true
       end
