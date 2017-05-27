@@ -8,7 +8,7 @@ class IssueSerializer < ActiveModel::Serializer
 
   def _embedded
     {
-        comments: object.comments,
+        comments: object.comments.order('created_at asc'),
         attached_files: object.attached_files
     }
   end
