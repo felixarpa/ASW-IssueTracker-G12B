@@ -199,7 +199,7 @@ class IssuesController < ApplicationController
       if edited_params.empty?
         comment_body += '<p><ul><li>'
         comment_body += "<strong>#{current_user.name}</strong>"
-      else if new_assignee.nil?
+      elsif new_assignee.nil?
         comment_body += ' and'
       else
         comment_body += ','
