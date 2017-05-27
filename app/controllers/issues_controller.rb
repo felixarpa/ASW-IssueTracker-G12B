@@ -187,29 +187,33 @@ class IssuesController < ApplicationController
     end
 
     unless edited_params.empty?
-      comment_body += current_user.name
+      comment_body += '<p><ul><li>'
+      comment_body += "<strong>#{current_user.name}</strong>"
       comment_body += ' has modified the issue attribute'
       comment_body += 's' if edited_params.size > 1
-      comment_body += ' ' + edited_params.to_sentence
+      comment_body += ' <i>' + edited_params.to_sentence + '</i>'
+      comment_body += '</li>'
     end
 
     unless added_attachments.empty?
       if edited_params.empty?
-        comment_body += current_user.name
-      elsif new_assignee.nil?
+        comment_body += '<p><ul><li>'
+        comment_body += "<strong>#{current_user.name}</strong>"
+      else if new_assignee.nil?
         comment_body += ' and'
       else
         comment_body += ','
       end
       comment_body += ' has attached the file'
       comment_body += 's' if added_attachments.size > 1
-      comment_body += ' ' + added_attachments.to_sentence
+      comment_body += ' <i>' + added_attachments.to_sentence + '</i>'
     end
 
 
     if params.has_key?(:assignee_id)
       if edited_params.empty? and added_attachments.empty?
-        comment_body += current_user.name
+        comment_body += '<p><ul><li>'
+        comment_body += "<strong>#{current_user.name}</strong>"
       else
         comment_body += ' and'
       end
@@ -223,11 +227,12 @@ class IssuesController < ApplicationController
 
     unless comment_body.empty?
       comment_body += '.'
+      comment_body += '</li></ul></p>'
     end
 
     if params[:comment]
-      comment_body += "\n\n"
-      comment_body += params[:comment]
+      comment_body += '<p>'
+      comment_body += params[:comment] + '</p>'
     end
 
     unless comment_body.empty?
