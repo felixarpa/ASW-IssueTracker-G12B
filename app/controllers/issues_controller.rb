@@ -221,7 +221,7 @@ class IssuesController < ApplicationController
       if User.find_by(id: params[:assignee_id]).nil?
         comment_body += ' has removed the assignee'
       else
-        comment_body += ' has assigned this issue to ' + new_assignee
+        comment_body += ' has assigned this issue to <strong>' + new_assignee + '</strong>'
       end
     end
 
@@ -231,8 +231,7 @@ class IssuesController < ApplicationController
     end
 
     if params[:comment]
-      comment_body += '<p>'
-      comment_body += params[:comment] + '</p>'
+      comment_body += params[:comment]
     end
 
     unless comment_body.empty?
