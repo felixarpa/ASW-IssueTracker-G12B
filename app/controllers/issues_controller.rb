@@ -192,7 +192,7 @@ class IssuesController < ApplicationController
       comment_body += ' has modified the issue attribute'
       comment_body += 's' if edited_params.size > 1
       comment_body += ' <i>' + edited_params.to_sentence + '</i>'
-      comment_body += '</li>'
+      comment_body += '.</li>'
     end
 
     unless added_attachments.empty?
@@ -207,6 +207,7 @@ class IssuesController < ApplicationController
       comment_body += ' has attached the file'
       comment_body += 's' if added_attachments.size > 1
       comment_body += ' <i>' + added_attachments.to_sentence + '</i>'
+      comment_body += '.</li>'
     end
 
 
@@ -223,11 +224,11 @@ class IssuesController < ApplicationController
       else
         comment_body += ' has assigned this issue to <strong>' + new_assignee + '</strong>'
       end
+      comment_body += '.</li>'
     end
 
     unless comment_body.empty?
-      comment_body += '.'
-      comment_body += '</li></ul></p>'
+      comment_body += '</ul></p>'
     end
 
     if params[:comment]
