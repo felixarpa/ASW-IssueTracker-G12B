@@ -1,5 +1,6 @@
 class IndexIssueSerializer < IssueSerializer
   attribute :voted_by_current_user, if: :current_user?
+  attribute :watched_by_current_user, if: :current_user?
   attributes :_links
 
   def current_user?
@@ -8,6 +9,10 @@ class IndexIssueSerializer < IssueSerializer
 
   def voted_by_current_user
     object.votes.exists?(current_user.id)
+  end
+
+  def watched_by_current_user
+    object.watchers.exists?(current_user.id)
   end
 
   def _links
